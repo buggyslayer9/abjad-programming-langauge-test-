@@ -1,0 +1,59 @@
+[package]
+name = "abjad-compiler"
+version = "0.1.0"
+edition = "2021"
+description = "Abjad Programming Language Compiler"
+authors = ["Abjad Team"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/abjad-lang/abjad"
+readme = "README.md"
+keywords = ["compiler", "arabic", "programming-language"]
+categories = ["compilers"]
+
+[dependencies]
+# CLI framework
+clap = { version = "4.5", features = ["derive"] }
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Logging
+log = "0.4"
+env_logger = "0.11"
+
+# Unicode support for Arabic
+unicode-segmentation = "1.11"
+regex = "1.10"
+
+# LLVM backend (will be added later)
+# inkwell = { version = "0.5", optional = true }
+
+# Cranelift backend (alternative)
+# cranelift = { version = "0.100", optional = true }
+
+[dev-dependencies]
+criterion = "0.5"
+
+[features]
+default = []
+llvm = []  # Will enable inkwell later
+cranelift = []  # Will enable cranelift later
+
+[[bin]]
+name = "abjad"
+path = "src/main.rs"
+
+[lib]
+name = "abjad"
+path = "src/lib.rs"
+
+[profile.dev]
+opt-level = 0
+debug = true
+
+[profile.release]
+opt-level = 3
+debug = false
+lto = true
+codegen-units = 1

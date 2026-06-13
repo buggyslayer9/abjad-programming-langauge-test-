@@ -1,0 +1,52 @@
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+Cargo.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Build
+/dist/
+/build/
+/out/
+
+# Test
+/*.profraw
+*.profdata
+
+# Documentation
+/doc/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Agent skills (if they contain sensitive info)
+.agents/skills/local/
+
+# Backup files
+*.bak
+*.backup

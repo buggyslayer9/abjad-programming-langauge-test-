@@ -1,0 +1,2555 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أبجد — وثيقة متطلبات المنتج</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono&family=Tajawal:wght@300;400;500;700;900&display=swap');
+
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C96A;
+  --gold-dark: #8B6914;
+  --ink: #0E0E0F;
+  --ink-2: #1C1C1E;
+  --ink-3: #2A2A2D;
+  --cream: #F5F0E8;
+  --cream-2: #EDE6D4;
+  --rust: #8B3A2A;
+  --teal-deep: #1A4A4A;
+  --teal: #2D7A7A;
+  --teal-light: #4AACAC;
+  --silver: #9A9A9A;
+  --border: rgba(201,168,76,0.25);
+  --mono: 'IBM Plex Mono', monospace;
+  --arabic: 'Tajawal', sans-serif;
+  --serif: 'Amiri', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--arabic);
+  font-size: 16px;
+  line-height: 1.85;
+  direction: rtl;
+}
+
+/* ─── GEOMETRIC BACKGROUND ─── */
+.geo-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  opacity: 0.035;
+}
+.geo-bg svg { width: 100%; height: 100%; }
+
+/* ─── LAYOUT ─── */
+.wrapper { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 2.5rem; }
+
+/* ─── COVER ─── */
+.cover {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  align-items: center; text-align: center; position: relative;
+  border-bottom: 1px solid var(--border);
+  padding: 5rem 2rem 4rem;
+}
+.cover::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(201,168,76,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cover-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  padding: 0.35em 1.2em;
+  border-radius: 2em;
+  margin-bottom: 3rem;
+  display: inline-block;
+}
+
+.cover-logo {
+  font-family: var(--serif);
+  font-size: clamp(5rem, 14vw, 10rem);
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 80px rgba(201,168,76,0.15);
+  margin-bottom: 0.6rem;
+}
+
+.cover-roman {
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  color: var(--silver);
+  letter-spacing: 0.25em;
+  margin-bottom: 2.5rem;
+}
+
+.cover-tagline {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--cream-2);
+  max-width: 600px;
+  margin-bottom: 1.5rem;
+  line-height: 2;
+}
+
+.cover-ext {
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  color: var(--teal-light);
+  direction: ltr;
+  margin-bottom: 3rem;
+  border: 1px solid rgba(74,172,172,0.3);
+  padding: 0.4em 1.2em;
+  border-radius: 8px;
+  background: rgba(74,172,172,0.06);
+}
+
+.cover-meta {
+  display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+  font-size: 0.85rem; color: var(--silver); font-family: var(--mono);
+}
+.cover-meta span { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.cover-meta strong { color: var(--gold); font-size: 1.1rem; font-weight: 400; }
+
+/* ─── TOC ─── */
+.toc-section {
+  padding: 5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.toc-item {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  text-decoration: none; color: inherit;
+}
+.toc-item:hover { background: rgba(201,168,76,0.07); border-color: rgba(201,168,76,0.5); }
+.toc-num {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--gold);
+  min-width: 2rem;
+  text-align: center;
+}
+.toc-title { font-size: 0.95rem; font-weight: 400; }
+
+/* ─── SECTIONS ─── */
+.section {
+  padding: 5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+
+.section-header {
+  display: flex; align-items: baseline; gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.section-num {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.3;
+}
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--teal-light);
+  margin-top: 0.5rem;
+  font-weight: 300;
+}
+
+/* ─── TYPOGRAPHY ─── */
+h3 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  color: var(--gold-light);
+  margin: 2.5rem 0 1rem;
+  font-weight: 400;
+  border-right: 3px solid var(--teal);
+  padding-right: 1rem;
+}
+
+p { margin-bottom: 1.2rem; color: var(--cream-2); font-weight: 300; }
+
+strong { color: var(--gold-light); font-weight: 500; }
+
+/* ─── CODE BLOCKS ─── */
+.code-block {
+  direction: ltr; text-align: left;
+  background: var(--ink-2);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-right: 3px solid var(--gold);
+  border-radius: 8px;
+  padding: 1.5rem 1.75rem;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  line-height: 1.8;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  position: relative;
+}
+.code-block::before {
+  content: attr(data-label);
+  position: absolute; top: 0.5rem; left: 0.75rem;
+  font-size: 0.7rem; color: var(--gold); opacity: 0.6;
+  letter-spacing: 0.08em;
+}
+.kw { color: #C9A84C; }
+.fn { color: #4AACAC; }
+.str { color: #8BC47A; }
+.cmt { color: #666; font-style: italic; }
+.num { color: #CF8B6E; }
+.tp { color: #B07FD4; }
+.op { color: #E8E8E8; }
+
+/* ─── FEATURE CARDS ─── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.feature-card {
+  background: var(--ink-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.feature-card:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-2px); }
+.feature-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+.feature-name {
+  font-weight: 500; color: var(--gold-light);
+  font-size: 0.95rem; margin-bottom: 0.5rem;
+}
+.feature-desc { font-size: 0.85rem; color: var(--silver); line-height: 1.65; }
+
+/* ─── SPEC TABLE ─── */
+.spec-table {
+  width: 100%; border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+.spec-table th {
+  background: rgba(201,168,76,0.12);
+  color: var(--gold);
+  font-weight: 500;
+  padding: 0.85rem 1.25rem;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--arabic);
+}
+.spec-table td {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--cream-2);
+  font-weight: 300;
+}
+.spec-table tr:hover td { background: rgba(255,255,255,0.02); }
+.spec-table .mono { font-family: var(--mono); font-size: 0.82rem; color: var(--teal-light); direction: ltr; text-align: left; }
+
+/* ─── PIPELINE DIAGRAM ─── */
+.pipeline {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 0;
+  margin: 2.5rem 0;
+  direction: ltr;
+}
+.pipe-stage {
+  background: var(--ink-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem 1.25rem;
+  text-align: center;
+  min-width: 110px;
+  position: relative;
+}
+.pipe-stage .ps-num { font-family: var(--mono); font-size: 0.65rem; color: var(--gold); margin-bottom: 0.25rem; }
+.pipe-stage .ps-name { font-size: 0.8rem; font-weight: 500; color: var(--cream); }
+.pipe-stage .ps-sub { font-size: 0.7rem; color: var(--silver); margin-top: 0.2rem; }
+.pipe-arrow {
+  color: var(--gold);
+  font-size: 1.2rem;
+  padding: 0 0.25rem;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* ─── COMPARISON TABLE ─── */
+.compare-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.88rem; direction: ltr; text-align: center; }
+.compare-table th { padding: 0.8rem 1rem; font-size: 0.82rem; font-weight: 500; border-bottom: 1px solid var(--border); }
+.compare-table th:first-child { text-align: right; color: var(--silver); }
+.compare-table th.hl { color: var(--gold); background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3); }
+.compare-table td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--cream-2); }
+.compare-table td:first-child { text-align: right; color: var(--silver); font-weight: 400; }
+.compare-table td.hl { background: rgba(201,168,76,0.05); font-weight: 500; }
+.tick { color: #4AACAC; }
+.cross { color: #8B3A2A; }
+.partial { color: var(--gold); }
+
+/* ─── TIMELINE ─── */
+.timeline { position: relative; padding-right: 2rem; margin: 2rem 0; }
+.timeline::before {
+  content: '';
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+.tl-item { position: relative; padding-right: 2.5rem; margin-bottom: 2.5rem; }
+.tl-dot {
+  position: absolute; right: -0.45rem; top: 0.4rem;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+}
+.tl-phase {
+  font-family: var(--mono);
+  font-size: 0.72rem; color: var(--gold);
+  letter-spacing: 0.1em; margin-bottom: 0.35rem;
+}
+.tl-title { font-weight: 500; color: var(--cream); margin-bottom: 0.5rem; }
+.tl-items { font-size: 0.88rem; color: var(--silver); }
+.tl-items li { list-style: none; padding-right: 0; margin-bottom: 0.25rem; }
+.tl-items li::before { content: '← '; color: var(--teal-light); }
+
+/* ─── CALLOUT ─── */
+.callout {
+  border-right: 3px solid var(--teal);
+  background: rgba(45,122,122,0.07);
+  border-radius: 0 8px 8px 0;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+  color: var(--cream-2);
+}
+.callout.gold {
+  border-right-color: var(--gold);
+  background: rgba(201,168,76,0.07);
+}
+
+/* ─── MILESTONE BADGES ─── */
+.badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1rem 0; }
+.badge {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 0.3em 0.9em;
+  border-radius: 2em;
+  border: 1px solid;
+  letter-spacing: 0.05em;
+}
+.badge-gold { color: var(--gold); border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.08); }
+.badge-teal { color: var(--teal-light); border-color: rgba(74,172,172,0.4); background: rgba(74,172,172,0.07); }
+.badge-rust { color: #E07060; border-color: rgba(139,58,42,0.5); background: rgba(139,58,42,0.08); }
+
+/* ─── SEPARATOR ─── */
+.sep { display: flex; align-items: center; gap: 1.5rem; margin: 3rem 0; }
+.sep-line { flex: 1; height: 1px; background: var(--border); }
+.sep-glyph { font-family: var(--serif); font-size: 1.2rem; color: var(--gold); opacity: 0.5; }
+
+/* ─── KEYWORD TABLE ─── */
+.kw-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  direction: ltr;
+}
+.kw-pill {
+  background: var(--ink-2);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+}
+.kw-arabic { font-family: var(--arabic); font-size: 1rem; color: var(--gold-light); display: block; margin-bottom: 0.2rem; }
+.kw-english { font-family: var(--mono); font-size: 0.65rem; color: var(--silver); }
+
+/* ─── ARCHITECTURE BOX ─── */
+.arch-layer {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 0.6rem 0;
+  overflow: hidden;
+}
+.arch-layer-header {
+  background: rgba(201,168,76,0.1);
+  padding: 0.65rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.arch-layer-body {
+  padding: 0.85rem 1.25rem;
+  font-size: 0.83rem;
+  color: var(--silver);
+  font-family: var(--mono);
+  direction: ltr;
+  line-height: 1.7;
+}
+
+/* ─── PRINT / FOOTER ─── */
+.footer {
+  padding: 4rem 0 5rem;
+  text-align: center;
+  color: var(--silver);
+  font-size: 0.82rem;
+  border-top: 1px solid var(--border);
+  direction: rtl;
+}
+.footer-logo {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  color: var(--gold);
+  opacity: 0.4;
+  margin-bottom: 1rem;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 700px) {
+  .feature-grid { grid-template-columns: 1fr 1fr; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .kw-grid { grid-template-columns: repeat(3, 1fr); }
+  .cover-logo { font-size: 5rem; }
+  .wrapper { padding: 0 1.25rem; }
+  .pipeline { flex-direction: column; }
+  .pipe-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- Geometric SVG background -->
+<div class="geo-bg" aria-hidden="true">
+<svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="star8" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+      <polygon points="60,5 72,45 110,45 80,68 92,108 60,85 28,108 40,68 10,45 48,45" fill="none" stroke="#C9A84C" stroke-width="0.5"/>
+      <rect x="30" y="30" width="60" height="60" fill="none" stroke="#C9A84C" stroke-width="0.3" transform="rotate(45 60 60)"/>
+    </pattern>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#star8)"/>
+</svg>
+</div>
+
+<!-- ═══════════════════════════════════ COVER ═══════════════════════════════════ -->
+<section class="cover">
+  <div class="cover-badge">وثيقة متطلبات المنتج · Product Requirements Document · v1.0</div>
+  <div class="cover-logo">أبجد</div>
+  <div class="cover-roman">A B J A D</div>
+  <p class="cover-tagline">
+    لغة برمجة عربية عالية الأداء، مفتوحة المصدر، تُترجم إلى لغة التجميع —
+    بسرعة <em>Rust</em> وأناقة <em>Python</em>
+  </p>
+  <div class="cover-ext">برنامج.أبجد</div>
+  <div class="cover-meta">
+    <span><strong>v 0.1.0-alpha</strong>إصدار</span>
+    <span><strong>2025</strong>السنة المستهدفة</span>
+    <span><strong>MIT</strong>الرخصة</span>
+    <span><strong>Assembly</strong>الهدف</span>
+    <span><strong>C / Go / Rust</strong>التوافق</span>
+  </div>
+</section>
+
+<div class="wrapper">
+
+<!-- ═══════════════════════════════════ TOC ═══════════════════════════════════ -->
+<section class="toc-section">
+  <div class="section-header">
+    <span class="section-num">——</span>
+    <div>
+      <div class="section-title">فهرس المحتويات</div>
+      <div class="section-subtitle">Table of Contents</div>
+    </div>
+  </div>
+  <div class="toc-grid">
+    <a href="#s1" class="toc-item"><span class="toc-num">01</span><span class="toc-title">الرؤية والأهداف</span></a>
+    <a href="#s2" class="toc-item"><span class="toc-num">02</span><span class="toc-title">الفلسفة التصميمية</span></a>
+    <a href="#s3" class="toc-item"><span class="toc-num">03</span><span class="toc-title">بنية اللغة والكلمات المفتاحية</span></a>
+    <a href="#s4" class="toc-item"><span class="toc-num">04</span><span class="toc-title">نظام الأنواع</span></a>
+    <a href="#s5" class="toc-item"><span class="toc-num">05</span><span class="toc-title">المميزات اللغوية</span></a>
+    <a href="#s6" class="toc-item"><span class="toc-num">06</span><span class="toc-title">المُجمِّع — بنية وخطوط الترجمة</span></a>
+    <a href="#s7" class="toc-item"><span class="toc-num">07</span><span class="toc-title">إدارة الذاكرة</span></a>
+    <a href="#s8" class="toc-item"><span class="toc-num">08</span><span class="toc-title">التوافق مع المكتبات الأجنبية</span></a>
+    <a href="#s9" class="toc-item"><span class="toc-num">09</span><span class="toc-title">مقارنة الأداء</span></a>
+    <a href="#s10" class="toc-item"><span class="toc-num">10</span><span class="toc-title">البيئة والأدوات</span></a>
+    <a href="#s11" class="toc-item"><span class="toc-num">11</span><span class="toc-title">SidraUI — مكتبة الواجهات الرسومية</span></a>
+    <a href="#s12" class="toc-item"><span class="toc-num">12</span><span class="toc-title">سَرَاب — إطار تطوير الألعاب</span></a>
+    <a href="#s13" class="toc-item"><span class="toc-num">13</span><span class="toc-title">الذكاء الاصطناعي المدمج</span></a>
+    <a href="#s14" class="toc-item"><span class="toc-num">14</span><span class="toc-title">الميزات الإسلامية والعربية</span></a>
+    <a href="#s15" class="toc-item"><span class="toc-num">15</span><span class="toc-title">الشبكات والأمن السيبراني</span></a>
+    <a href="#s16" class="toc-item"><span class="toc-num">16</span><span class="toc-title">تطوير الويب والإطار الكامل</span></a>
+    <a href="#s17" class="toc-item"><span class="toc-num">17</span><span class="toc-title">بيئة التطوير المتكاملة (IDE)</span></a>
+    <a href="#s18" class="toc-item"><span class="toc-num">18</span><span class="toc-title">يسونل العربي (Arabic JSON)</span></a>
+    <a href="#s19" class="toc-item"><span class="toc-num">19</span><span class="toc-title">الرياضيات والفيزياء المتقدمة</span></a>
+    <a href="#s20" class="toc-item"><span class="toc-num">20</span><span class="toc-title">الميزات منخفضة المستوى</span></a>
+    <a href="#s21" class="toc-item"><span class="toc-num">21</span><span class="toc-title">خارطة الطريق المحدثة</span></a>
+    <a href="#s22" class="toc-item"><span class="toc-num">22</span><span class="toc-title">المتطلبات التقنية</span></a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §1 VISION ═══════════════════════════════════ -->
+<section class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <div>
+      <div class="section-title">الرؤية والأهداف</div>
+      <div class="section-subtitle">Vision & Objectives</div>
+    </div>
+  </div>
+
+  <p>
+    <strong>أبجد</strong> هي أول لغة برمجة عربية كاملة — مكتوبةً وهيكلاً وأدواتٍ — تُجمَّع مباشرةً إلى لغة التجميع (Assembly) وتنتج كوداً أصيلاً بأداء مقارب لـ C وRust وGo. الهدف ليس مجرد ترجمة الإنجليزية إلى العربية، بل بناء نموذج جديد للتعبير البرمجي يخدم أكثر من 400 مليون متحدث عربي.
+  </p>
+  <p>
+    تُصمَّم اللغة لتكون <strong>سهلة التعلم كـ Python</strong>، <strong>سريعة كـ Rust</strong>، <strong>مستقرة كـ Go</strong>، مع دعم كامل لاستدعاء مكتبات C وGo وRust مباشرةً دون تكاليف إضافية.
+  </p>
+
+  <div class="callout gold">
+    <strong>المبدأ الجوهري:</strong> الكود العربي ليس مجرد واجهة — هو البنية كلها. المتغيرات، الدوال، الأنواع، التعليقات، الأخطاء، التوثيق — كل شيء يُكتب بالعربية الفصحى أو العامية المعيارية.
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-name">أداء خام</div>
+      <div class="feature-desc">تُجمَّع إلى Assembly مُحسَّن مع تحسينات SIMD وإزالة الكود الميت تلقائياً</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌐</span>
+      <div class="feature-name">توافق عالمي</div>
+      <div class="feature-desc">استدعاء مباشر لمكتبات C وGo وRust وPython عبر طبقة FFI أصيلة</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔒</span>
+      <div class="feature-name">أمان الذاكرة</div>
+      <div class="feature-desc">نظام ملكية (Ownership) مُبسَّط مستوحى من Rust بدون نحو معقد</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📐</span>
+      <div class="feature-name">أنواع قوية</div>
+      <div class="feature-desc">نظام أنواع ثابت مع استنتاج تلقائي وأنواع مجمَّعة (Sum types)</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔄</span>
+      <div class="feature-name">تزامن آمن</div>
+      <div class="feature-desc">نموذج Actor وCoroutines خفيفة الوزن مضمَّنة في النواة</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🧰</span>
+      <div class="feature-name">بيئة متكاملة</div>
+      <div class="feature-desc">مُجمِّع، مدير حزم، أداة تنسيق، مُصحِّح — كل الأدوات بالعربية</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §2 PHILOSOPHY ═══════════════════════════════════ -->
+<section class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <div>
+      <div class="section-title">الفلسفة التصميمية</div>
+      <div class="section-subtitle">Design Philosophy</div>
+    </div>
+  </div>
+
+  <p>
+    تقوم أبجد على <strong>سبعة مبادئ تصميمية</strong> تحكم كل قرار في اللغة والمُجمِّع والنظام البيئي:
+  </p>
+
+  <h3>١ · الوضوح قبل الإيجاز</h3>
+  <p>
+    الكود الواضح أهم من الكود القصير. لا تُقتل الكلمات المفتاحية، ولا تُختصر الأسماء قسراً. العربية لغة غنية بالمفردات — استخدامها كاملةً يزيد القراءة لا يُعيقها.
+  </p>
+
+  <h3>٢ · صفر تكلفة التجريد (Zero-Cost Abstractions)</h3>
+  <p>
+    كل تجريد في اللغة — الأنواع العامة، المشابهات (Traits)، البرمجة الوظيفية — يُحوَّل إلى كود مكافئ لما سيكتبه المبرمج يدوياً بلغة التجميع. لا عبء وقت التشغيل أبداً.
+  </p>
+
+  <h3>٣ · العربية أولاً، الترجمة ثانياً</h3>
+  <p>
+    ليست أبجد لغة مُترجَمة من الإنجليزية. كل كلمة مفتاحية اختُيرت من القاموس العربي لتحمل معناها بدقة. <code class="code-block" style="display:inline;padding:0.1em 0.5em;font-size:0.85em;border:none;background:var(--ink-3);border-radius:4px;direction:ltr">دالة</code> أوضح من <code>func</code> لأي مبتدئ عربي.
+  </p>
+
+  <h3>٤ · الأخطاء كمواطنين من الدرجة الأولى</h3>
+  <p>
+    لا استثناءات مخفية. كل دالة قد تُخطئ تُعلن عن ذلك في نوعها. المُجمِّع يرفض تجاهل الأخطاء بصمت.
+  </p>
+
+  <h3>٥ · مُجمِّع واحد، منصات متعددة</h3>
+  <p>
+    تُجمَّع أبجد إلى x86-64، ARM64، RISC-V، وWebAssembly من نفس الكود المصدري دون تعديل.
+  </p>
+
+  <h3>٦ · التوافق كميزة أصيلة</h3>
+  <p>
+    استدعاء مكتبات C ليس إضافةً — هو جزء من اللغة الأساسية. يمكن استخدام <em>أي</em> مكتبة C كمكتبة أبجد مباشرةً.
+  </p>
+
+  <h3>٧ · الحتمي الافتراضي</h3>
+  <p>
+    البرامج تعمل بنفس الطريقة في كل مرة على كل منصة. لا سلوك غير محدد. لا مفاجآت.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════ §3 SYNTAX ═══════════════════════════════════ -->
+<section class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <div>
+      <div class="section-title">بنية اللغة والكلمات المفتاحية</div>
+      <div class="section-subtitle">Syntax & Keywords</div>
+    </div>
+  </div>
+
+  <p>
+    الكلمات المفتاحية في أبجد كلمات عربية فصيحة ذات معانٍ دقيقة. إليك الجدول الكامل لكلمات اللغة الأساسية:
+  </p>
+
+  <div class="kw-grid">
+    <div class="kw-pill"><span class="kw-arabic">دالة</span><span class="kw-english">fn / func</span></div>
+    <div class="kw-pill"><span class="kw-arabic">متغير</span><span class="kw-english">let / var</span></div>
+    <div class="kw-pill"><span class="kw-arabic">ثابت</span><span class="kw-english">const</span></div>
+    <div class="kw-pill"><span class="kw-arabic">إذا</span><span class="kw-english">if</span></div>
+    <div class="kw-pill"><span class="kw-arabic">وإلا</span><span class="kw-english">else</span></div>
+    <div class="kw-pill"><span class="kw-arabic">وإلا_إذا</span><span class="kw-english">else if</span></div>
+    <div class="kw-pill"><span class="kw-arabic">طالما</span><span class="kw-english">while</span></div>
+    <div class="kw-pill"><span class="kw-arabic">لكل</span><span class="kw-english">for each</span></div>
+    <div class="kw-pill"><span class="kw-arabic">كرر</span><span class="kw-english">loop</span></div>
+    <div class="kw-pill"><span class="kw-arabic">أعد</span><span class="kw-english">return</span></div>
+    <div class="kw-pill"><span class="kw-arabic">أوقف</span><span class="kw-english">break</span></div>
+    <div class="kw-pill"><span class="kw-arabic">تابع</span><span class="kw-english">continue</span></div>
+    <div class="kw-pill"><span class="kw-arabic">هيكل</span><span class="kw-english">struct</span></div>
+    <div class="kw-pill"><span class="kw-arabic">نوع</span><span class="kw-english">type / enum</span></div>
+    <div class="kw-pill"><span class="kw-arabic">واجهة</span><span class="kw-english">interface / trait</span></div>
+    <div class="kw-pill"><span class="kw-arabic">نفِّذ</span><span class="kw-english">impl</span></div>
+    <div class="kw-pill"><span class="kw-arabic">استورد</span><span class="kw-english">import / use</span></div>
+    <div class="kw-pill"><span class="kw-arabic">حزمة</span><span class="kw-english">package / mod</span></div>
+    <div class="kw-pill"><span class="kw-arabic">عام</span><span class="kw-english">pub / public</span></div>
+    <div class="kw-pill"><span class="kw-arabic">خاص</span><span class="kw-english">private</span></div>
+    <div class="kw-pill"><span class="kw-arabic">غير_متزامن</span><span class="kw-english">async</span></div>
+    <div class="kw-pill"><span class="kw-arabic">انتظر</span><span class="kw-english">await</span></div>
+    <div class="kw-pill"><span class="kw-arabic">ارسل</span><span class="kw-english">send (actor)</span></div>
+    <div class="kw-pill"><span class="kw-arabic">حاول</span><span class="kw-english">try</span></div>
+    <div class="kw-pill"><span class="kw-arabic">نتيجة</span><span class="kw-english">Result</span></div>
+    <div class="kw-pill"><span class="kw-arabic">خطأ</span><span class="kw-english">Error</span></div>
+    <div class="kw-pill"><span class="kw-arabic">ربما</span><span class="kw-english">Option / Maybe</span></div>
+    <div class="kw-pill"><span class="kw-arabic">صحيح</span><span class="kw-english">true</span></div>
+    <div class="kw-pill"><span class="kw-arabic">خطأ</span><span class="kw-english">false</span></div>
+    <div class="kw-pill"><span class="kw-arabic">فارغ</span><span class="kw-english">null / nil</span></div>
+    <div class="kw-pill"><span class="kw-arabic">مطابق</span><span class="kw-english">match / switch</span></div>
+    <div class="kw-pill"><span class="kw-arabic">حالة</span><span class="kw-english">case</span></div>
+  </div>
+
+  <h3>مثال أول — Hello World</h3>
+  <div class="code-block" data-label="hello.أبجد">
+<span class="cmt">// أبجد — مرحبا بالعالم</span>
+<span class="kw">استورد</span> <span class="str">"أبجد/طباعة"</span>
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    طباعة(<span class="str">"مرحباً بالعالم!"</span>)
+}
+  </div>
+
+  <h3>مثال ثانٍ — حساب المصفوفات والأنواع</h3>
+  <div class="code-block" data-label="أمثلة.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/رياضيات"</span>
+
+<span class="cmt">// تعريف هيكل بيانات</span>
+<span class="kw">هيكل</span> <span class="tp">نقطة</span> {
+    س: <span class="tp">عشري٦٤</span>
+    ص: <span class="tp">عشري٦٤</span>
+}
+
+<span class="cmt">// تنفيذ واجهة المسافة</span>
+<span class="kw">نفِّذ</span> <span class="tp">نقطة</span> {
+    <span class="kw">دالة</span> <span class="fn">مسافة_من</span>(<span class="op">&amp;</span>ذات، أخرى: <span class="op">&amp;</span><span class="tp">نقطة</span>) -> <span class="tp">عشري٦٤</span> {
+        متغير فارق_س = ذات.س - أخرى.س
+        متغير فارق_ص = ذات.ص - أخرى.ص
+        <span class="kw">أعد</span> رياضيات.جذر(فارق_س * فارق_س + فارق_ص * فارق_ص)
+    }
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> ن١ = <span class="tp">نقطة</span> { س: <span class="num">3.0</span>، ص: <span class="num">4.0</span> }
+    <span class="kw">متغير</span> ن٢ = <span class="tp">نقطة</span> { س: <span class="num">0.0</span>، ص: <span class="num">0.0</span> }
+    طباعة("المسافة: {}", ن١.مسافة_من(&amp;ن٢))
+    <span class="cmt">// الناتج: المسافة: 5</span>
+}
+  </div>
+
+  <h3>مثال ثالث — معالجة الأخطاء</h3>
+  <div class="code-block" data-label="أخطاء.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/ملفات"</span>
+
+<span class="cmt">// الدوال التي قد تُخطئ تُعيد نتيجة[النجاح، الخطأ]</span>
+<span class="kw">دالة</span> <span class="fn">اقرأ_ملف</span>(المسار: <span class="tp">نص</span>) -> <span class="tp">نتيجة</span>[<span class="tp">نص</span>، <span class="tp">خطأ_ملف</span>] {
+    <span class="kw">متغير</span> محتوى = <span class="kw">حاول</span> ملفات.افتح(المسار)
+    <span class="kw">أعد</span> محتوى.اقرأ_كل()
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">مطابق</span> اقرأ_ملف(<span class="str">"بيانات.txt"</span>) {
+        <span class="kw">حالة</span> نجح(محتوى) => طباعة("تم: {}", محتوى)
+        <span class="kw">حالة</span> فشل(خطأ)   => طباعة("فشل: {}", خطأ.رسالة)
+    }
+}
+  </div>
+
+  <h3>مثال رابع — البرمجة غير المتزامنة</h3>
+  <div class="code-block" data-label="تزامن.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/شبكة"</span>
+
+<span class="kw">دالة</span> <span class="fn">غير_متزامن</span> <span class="fn">جلب_بيانات</span>(رابط: <span class="tp">نص</span>) -> <span class="tp">نتيجة</span>[<span class="tp">بايت[]</span>، <span class="tp">خطأ</span>] {
+    <span class="kw">متغير</span> استجابة = <span class="kw">انتظر</span> شبكة.احضر(رابط)
+    <span class="kw">أعد</span> <span class="kw">انتظر</span> استجابة.جسم()
+}
+
+<span class="kw">دالة</span> <span class="fn">غير_متزامن</span> <span class="fn">رئيسية</span>() {
+    <span class="cmt">// تشغيل طلبات متوازية بشكل أنيق</span>
+    <span class="kw">متغير</span> روابط = [<span class="str">"مثال.com/أ"</span>، <span class="str">"مثال.com/ب"</span>، <span class="str">"مثال.com/ج"</span>]
+    <span class="kw">متغير</span> نتائج = <span class="kw">انتظر</span> كل(روابط.خريطة(|ر| جلب_بيانات(ر)))
+    طباعة("تم تحميل {} ملفاً", نتائج.طول)
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §4 TYPE SYSTEM ═══════════════════════════════════ -->
+<section class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <div>
+      <div class="section-title">نظام الأنواع</div>
+      <div class="section-subtitle">Type System</div>
+    </div>
+  </div>
+
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>الفئة</th>
+        <th>النوع بالعربية</th>
+        <th>المكافئ</th>
+        <th>الحجم</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>أعداد صحيحة</td><td class="mono">صحيح٨ / صحيح١٦ / صحيح٣٢ / صحيح٦٤</td><td class="mono">i8 / i16 / i32 / i64</td><td class="mono">1-8 bytes</td></tr>
+      <tr><td>أعداد صحيحة غير منقوصة</td><td class="mono">طبيعي٨ / طبيعي١٦ / طبيعي٣٢ / طبيعي٦٤</td><td class="mono">u8 / u16 / u32 / u64</td><td class="mono">1-8 bytes</td></tr>
+      <tr><td>أعداد عشرية</td><td class="mono">عشري٣٢ / عشري٦٤</td><td class="mono">f32 / f64</td><td class="mono">4-8 bytes</td></tr>
+      <tr><td>نصوص</td><td class="mono">نص / حرف</td><td class="mono">String / char (UTF-8)</td><td class="mono">Dynamic</td></tr>
+      <tr><td>منطقي</td><td class="mono">منطقي</td><td class="mono">bool</td><td class="mono">1 byte</td></tr>
+      <tr><td>مصفوفة ثابتة</td><td class="mono">مصفوفة[ن، ك]</td><td class="mono">[T; N]</td><td class="mono">N × sizeof(T)</td></tr>
+      <tr><td>قائمة متحركة</td><td class="mono">قائمة[ن]</td><td class="mono">Vec&lt;T&gt;</td><td class="mono">Dynamic</td></tr>
+      <tr><td>قاموس</td><td class="mono">قاموس[م، ن]</td><td class="mono">HashMap&lt;K,V&gt;</td><td class="mono">Dynamic</td></tr>
+      <tr><td>مؤشر</td><td class="mono">مؤشر[ن]</td><td class="mono">*T / &amp;T</td><td class="mono">8 bytes</td></tr>
+      <tr><td>ربما</td><td class="mono">ربما[ن]</td><td class="mono">Option&lt;T&gt;</td><td class="mono">sizeof(T)+1</td></tr>
+      <tr><td>نتيجة</td><td class="mono">نتيجة[ن، خ]</td><td class="mono">Result&lt;T,E&gt;</td><td class="mono">max(T,E)+1</td></tr>
+      <tr><td>مجهول الحجم</td><td class="mono">أي</td><td class="mono">any (dyn Trait)</td><td class="mono">Pointer+vtable</td></tr>
+    </tbody>
+  </table>
+
+  <h3>أنواع المجموع (Sum Types / Enums)</h3>
+  <div class="code-block" data-label="أنواع.أبجد">
+<span class="kw">نوع</span> <span class="tp">شكل</span> {
+    دائرة { نصف_القطر: <span class="tp">عشري٦٤</span> }
+    مستطيل { العرض: <span class="tp">عشري٦٤</span>، الارتفاع: <span class="tp">عشري٦٤</span> }
+    مثلث { قاعدة: <span class="tp">عشري٦٤</span>، ارتفاع: <span class="tp">عشري٦٤</span> }
+}
+
+<span class="kw">دالة</span> <span class="fn">احسب_المساحة</span>(ش: <span class="tp">شكل</span>) -> <span class="tp">عشري٦٤</span> {
+    <span class="kw">مطابق</span> ش {
+        <span class="kw">حالة</span> دائرة { نصف_القطر: ر } => ٣.١٤١٥٩ * ر * ر
+        <span class="kw">حالة</span> مستطيل { العرض: ع، الارتفاع: ا } => ع * ا
+        <span class="kw">حالة</span> مثلث { قاعدة: ق، ارتفاع: ا } => ٠.٥ * ق * ا
+    }
+}
+  </div>
+
+  <div class="callout">
+    <strong>ملاحظة:</strong> تدعم أبجد الأرقام العربية الهندية (٠١٢٣٤٥٦٧٨٩) إلى جانب الأرقام الغربية (0123456789). كلا الشكلين صحيح نحوياً ويُنتجان نفس الكود الثنائي.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §5 FEATURES ═══════════════════════════════════ -->
+<section class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <div>
+      <div class="section-title">المميزات اللغوية المتقدمة</div>
+      <div class="section-subtitle">Advanced Language Features</div>
+    </div>
+  </div>
+
+  <h3>أ · الأنواع العامة (Generics)</h3>
+  <div class="code-block" data-label="عامة.أبجد">
+<span class="cmt">// دالة عامة تعمل على أي نوع يدعم المقارنة</span>
+<span class="kw">دالة</span> <span class="fn">أكبر</span>&lt;<span class="tp">ن: قابل_للمقارنة</span>&gt;(أ: <span class="tp">ن</span>، ب: <span class="tp">ن</span>) -> <span class="tp">ن</span> {
+    <span class="kw">إذا</span> أ > ب { <span class="kw">أعد</span> أ } <span class="kw">وإلا</span> { <span class="kw">أعد</span> ب }
+}
+
+<span class="cmt">// قائمة مكدس عامة</span>
+<span class="kw">هيكل</span> <span class="tp">مكدس</span>&lt;<span class="tp">ن</span>&gt; {
+    بيانات: <span class="tp">قائمة</span>[<span class="tp">ن</span>]
+}
+<span class="kw">نفِّذ</span> &lt;<span class="tp">ن</span>&gt; <span class="tp">مكدس</span>&lt;<span class="tp">ن</span>&gt; {
+    <span class="kw">دالة</span> <span class="fn">ادفع</span>(<span class="op">&amp;</span>متغير ذات، قيمة: <span class="tp">ن</span>) { ذات.بيانات.أضف(قيمة) }
+    <span class="kw">دالة</span> <span class="fn">اسحب</span>(<span class="op">&amp;</span>متغير ذات) -> <span class="tp">ربما</span>[<span class="tp">ن</span>] { ذات.بيانات.سحب_آخر() }
+}
+  </div>
+
+  <h3>ب · المشابهات (Traits / Interfaces)</h3>
+  <div class="code-block" data-label="مشابهات.أبجد">
+<span class="kw">واجهة</span> <span class="tp">قابل_للطباعة</span> {
+    <span class="kw">دالة</span> <span class="fn">اطبع</span>(<span class="op">&amp;</span>ذات) -> <span class="tp">نص</span>
+}
+
+<span class="kw">واجهة</span> <span class="tp">قابل_للتسلسل</span> {
+    <span class="kw">دالة</span> <span class="fn">إلى_يسونل</span>(<span class="op">&amp;</span>ذات) -> <span class="tp">نتيجة</span>[<span class="tp">نص</span>، <span class="tp">خطأ</span>]
+    <span class="kw">دالة</span> <span class="fn">من_يسونل</span>(بيانات: <span class="tp">نص</span>) -> <span class="tp">نتيجة</span>[ذات، <span class="tp">خطأ</span>]
+}
+
+<span class="cmt">// تنفيذ متعدد الواجهات</span>
+<span class="kw">نفِّذ</span> <span class="tp">قابل_للطباعة</span> <span class="kw">لـ</span> <span class="tp">نقطة</span> {
+    <span class="kw">دالة</span> <span class="fn">اطبع</span>(<span class="op">&amp;</span>ذات) -> <span class="tp">نص</span> {
+        <span class="kw">أعد</span> شكّل("({}, {})", ذات.س، ذات.ص)
+    }
+}
+  </div>
+
+  <h3>ج · الإغلاقات والبرمجة الوظيفية</h3>
+  <div class="code-block" data-label="وظيفي.أبجد">
+<span class="kw">متغير</span> أرقام: <span class="tp">قائمة</span>[<span class="tp">صحيح٣٢</span>] = [<span class="num">١</span>، <span class="num">٢</span>، <span class="num">٣</span>، <span class="num">٤</span>، <span class="num">٥</span>، <span class="num">٦</span>]
+
+<span class="cmt">// تصفية + تحويل + تجميع بأسلوب وظيفي سلس</span>
+<span class="kw">متغير</span> نتيجة = أرقام
+    .صفِّ(|ن| ن % <span class="num">٢</span> == <span class="num">٠</span>)        <span class="cmt">// الأزواج فقط: [2،4،6]</span>
+    .حوِّل(|ن| ن * ن)             <span class="cmt">// تربيع: [4،16،36]</span>
+    .اجمع(<span class="num">٠</span>)                     <span class="cmt">// مجموع: 56</span>
+
+<span class="cmt">// إغلاق يلتقط المتغيرات من السياق</span>
+<span class="kw">متغير</span> عتبة = <span class="num">١٠</span>
+<span class="kw">متغير</span> فوق_العتبة = أرقام.صفِّ(|ن| ن > عتبة)
+  </div>
+
+  <h3>د · نموذج الممثلين (Actor Model)</h3>
+  <div class="code-block" data-label="ممثلون.أبجد">
+<span class="kw">هيكل</span> <span class="tp">خادم_ويب</span> { عدد_الطلبات: <span class="tp">طبيعي٦٤</span> }
+
+<span class="kw">نفِّذ</span> <span class="tp">ممثل</span> <span class="kw">لـ</span> <span class="tp">خادم_ويب</span> {
+    <span class="kw">نوع</span> <span class="tp">الرسالة</span> = <span class="tp">طلب_ويب</span>
+
+    <span class="kw">دالة</span> <span class="fn">غير_متزامن</span> <span class="fn">عالج_رسالة</span>(<span class="op">&amp;</span>متغير ذات، رسالة: <span class="tp">طلب_ويب</span>) {
+        ذات.عدد_الطلبات += <span class="num">١</span>
+        <span class="kw">انتظر</span> ذات.أرسل_رد(رسالة.معرف، <span class="str">"200 OK"</span>)
+    }
+}
+
+<span class="kw">دالة</span> <span class="fn">غير_متزامن</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> خادم = <span class="tp">خادم_ويب</span>::ابدأ(خادم_ويب { عدد_الطلبات: <span class="num">٠</span> })
+    <span class="kw">انتظر</span> خادم.أرسل(طلب_ويب { معرف: <span class="num">١</span>، مسار: <span class="str">"/"</span> })
+}
+  </div>
+
+  <h3>هـ · SIMD والتحسينات الدقيقة (Low-Level)</h3>
+  <div class="code-block" data-label="سيمد.أبجد">
+<span class="cmt">// توجيهات مضمَّنة للتحكم الدقيق بالأداء</span>
+<span class="kw">دالة</span> <span class="fn">جمع_مصفوفة</span>(بيانات: &amp;[<span class="tp">عشري٣٢</span>]) -> <span class="tp">عشري٣٢</span> {
+    <span class="cmt">// المُجمِّع يُولِّد تعليمات AVX2/NEON تلقائياً</span>
+    #[سيمد(avx2)]
+    <span class="kw">أعد</span> بيانات.اجمع(<span class="num">٠.٠</span>)
+}
+
+<span class="cmt">// تضمين Assembly مباشرةً عند الحاجة</span>
+<span class="kw">دالة</span> <span class="fn">قلب_البت</span>(قيمة: <span class="tp">طبيعي٦٤</span>) -> <span class="tp">طبيعي٦٤</span> {
+    <span class="kw">تجميع!</span> {
+        "popcnt {0}, {0}"،
+        inout(reg) قيمة
+    }
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §6 COMPILER ═══════════════════════════════════ -->
+<section class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <div>
+      <div class="section-title">المُجمِّع — بنية وخطوط الترجمة</div>
+      <div class="section-subtitle">Compiler Architecture & Pipeline</div>
+    </div>
+  </div>
+
+  <p>
+    يُبنى مُجمِّع أبجد (اسمه <strong>أبجد-ج</strong>) بلغة Rust لضمان الأمان والأداء. يتبع معمارية متعددة المراحل كلاسيكية مع إضافات خاصة بالعربية:
+  </p>
+
+  <div class="pipeline">
+    <div class="pipe-stage"><div class="ps-num">01</div><div class="ps-name">المُفكِّك</div><div class="ps-sub">Lexer (RTL-aware)</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-stage"><div class="ps-num">02</div><div class="ps-name">المُحلِّل</div><div class="ps-sub">Parser (Pratt)</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-stage"><div class="ps-num">03</div><div class="ps-name">شجرة AST</div><div class="ps-sub">Abstract Syntax</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-stage"><div class="ps-num">04</div><div class="ps-name">الدلالات</div><div class="ps-sub">Semantic Analysis</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-stage"><div class="ps-num">05</div><div class="ps-name">HIR</div><div class="ps-sub">High-level IR</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-stage"><div class="ps-num">06</div><div class="ps-name">MIR</div><div class="ps-sub">Mid-level IR</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-stage"><div class="ps-num">07</div><div class="ps-name">التحسين</div><div class="ps-sub">Optimization Passes</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-stage"><div class="ps-num">08</div><div class="ps-name">توليد الكود</div><div class="ps-sub">LLVM / Cranelift</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-stage"><div class="ps-num">09</div><div class="ps-name">Assembly / ELF</div><div class="ps-sub">Native Binary</div></div>
+  </div>
+
+  <div class="arch-layer">
+    <div class="arch-layer-header">🔤 المرحلة ١-٢: التحليل المعجمي والنحوي (Arabic-Aware Lexing)</div>
+    <div class="arch-layer-body">
+- دعم كامل لـ Unicode بالمستوى الثاني (Arabic, Arabic Extended-A, Arabic Math Symbols)
+- معالجة اتجاه النص (RTL) في رسائل الخطأ والتشخيص
+- دعم رموز الأرقام العربية الهندية (٠-٩) ومعادلاتها الغربية (0-9)
+- المُحلِّل النحوي: Pratt Parser لتعبيرات البادئة والوسط واللاحقة
+- كشف الكلمات المفتاحية المركبة (وإلا_إذا، غير_متزامن، ...) في خطوة واحدة
+    </div>
+  </div>
+
+  <div class="arch-layer">
+    <div class="arch-layer-header">🌲 المرحلة ٣-٤: الشجرة والتحليل الدلالي</div>
+    <div class="arch-layer-body">
+- AST غنية بمعلومات الموقع للتشخيص الدقيق
+- تحليل النطاق (Scope Analysis) وحل الأسماء
+- استنتاج الأنواع باستخدام خوارزمية Hindley-Milner المُعدَّلة
+- تحقق نظام الملكية (Borrow Checker) مع رسائل خطأ عربية كاملة
+- تحليل النمط (Pattern Exhaustiveness) للتحقق من اكتمال حالات مطابق
+    </div>
+  </div>
+
+  <div class="arch-layer">
+    <div class="arch-layer-header">⚡ المرحلة ٥-٧: التمثيل الوسيط والتحسين</div>
+    <div class="arch-layer-body">
+- HIR: تبسيط السكر النحوي، فرد الحلقات (Loop Unrolling)
+- MIR: تمثيل مستوى متوسط مشابه لـ MLIR، يستهدف x86/ARM/WASM
+- Optimization Passes المُطبَّقة:
+    ↳ إلغاء الكود الميت (DCE) + إزالة الوحدات الفارغة
+    ↳ التضمين التلقائي (Auto-inlining) بناء على التحليل الإحصائي
+    ↳ SIMD Vectorization لحلقات التكرار المتوقعة
+    ↳ Escape Analysis لتخصيص المكدس بدلاً من الكومة
+    ↳ تحليل تدفق البيانات بين الإجراءات (Inter-procedural DFA)
+    </div>
+  </div>
+
+  <div class="arch-layer">
+    <div class="arch-layer-header">🎯 المرحلة ٨-٩: توليد الكود الأصيل</div>
+    <div class="arch-layer-body">
+- الواجهة الأمامية: LLVM IR (إصدار 18+) للإنتاج
+- الواجهة التجريبية: Cranelift لأوقات بناء أسرع في وضع التطوير
+- الأهداف المدعومة: x86-64، AArch64، RISC-V64، WebAssembly
+- توليد رموز تصحيح DWARF بأسماء عربية قابلة للقراءة
+- دعم LTO (Link-Time Optimization) عبر LLVM ThinLTO
+    </div>
+  </div>
+
+  <h3>أوامر المُجمِّع الأساسية</h3>
+  <div class="code-block" data-label="shell">
+<span class="cmt"># بناء مشروع أبجد</span>
+أبجد بنِ                          <span class="cmt"># Debug build</span>
+أبجد بنِ --إنتاج                   <span class="cmt"># Release build (مُحسَّن)</span>
+أبجد بنِ --هدف arm64-apple-macos  <span class="cmt"># Cross-compile</span>
+
+<span class="cmt"># تشغيل مباشر</span>
+أبجد شغِّل
+
+<span class="cmt"># فحص بدون توليد كود</span>
+أبجد تحقق
+
+<span class="cmt"># التنسيق التلقائي</span>
+أبجد نسِّق
+
+<span class="cmt"># إدارة الحزم</span>
+أبجد أضف مكتبة-الشبكة
+أبجد حدِّث
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §7 MEMORY ═══════════════════════════════════ -->
+<section class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <div>
+      <div class="section-title">إدارة الذاكرة</div>
+      <div class="section-subtitle">Memory Management</div>
+    </div>
+  </div>
+
+  <p>
+    تعتمد أبجد نموذجاً هجيناً لإدارة الذاكرة يجمع بين مزايا عدة أنظمة دون عيوبها:
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">👑</span>
+      <div class="feature-name">نظام الملكية</div>
+      <div class="feature-desc">كل قيمة لها مالك واحد. عند خروج المالك من النطاق تُحرَّر الذاكرة تلقائياً — بدون GC.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📎</span>
+      <div class="feature-name">الاستعارة (Borrowing)</div>
+      <div class="feature-desc">مراجع غير قابلة للتعديل متعددة، أو مرجع قابل للتعديل واحد — يُفحص وقت الترجمة.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔢</span>
+      <div class="feature-name">تعداد المراجع</div>
+      <div class="feature-desc">نوع <code>مشترك[ن]</code> يوفر ملكية مشتركة بتعداد مراجع ذري (Arc-like).</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>لا GC، لا malloc/free يدوي:</strong> المُجمِّع يُدرج تعليمات تحرير الذاكرة في المواقع الصحيحة تلقائياً بناء على تحليل الملكية. وقت توقف صفر (Zero pause times).
+  </div>
+
+  <div class="code-block" data-label="ذاكرة.أبجد">
+<span class="kw">دالة</span> <span class="fn">مثال_الملكية</span>() {
+    <span class="kw">متغير</span> أ = <span class="tp">قائمة</span>::من([<span class="num">١</span>، <span class="num">٢</span>، <span class="num">٣</span>])  <span class="cmt">// 'أ' يملك القائمة</span>
+    <span class="kw">متغير</span> ب = أ                              <span class="cmt">// الملكية تنتقل إلى 'ب'</span>
+    <span class="cmt">// طباعة(أ)  ← خطأ وقت الترجمة: 'أ' فقد ملكيته</span>
+
+    <span class="kw">متغير</span> مرجع = &amp;ب                          <span class="cmt">// استعارة غير قابلة للتعديل</span>
+    طباعة("الطول: {}", مرجع.طول)
+
+    <span class="cmt">// يُحرَّر 'ب' هنا تلقائياً — بدون free() يدوي</span>
+}
+
+<span class="kw">دالة</span> <span class="fn">مثال_مشترك</span>() {
+    <span class="kw">متغير</span> مشترك_١ = <span class="tp">مشترك</span>::جديد(قيمة_ضخمة())
+    <span class="kw">متغير</span> مشترك_٢ = مشترك_١.استنسخ()  <span class="cmt">// زيادة تعداد المراجع</span>
+    <span class="cmt">// يُحرَّر عند وصول التعداد إلى صفر</span>
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §8 FFI ═══════════════════════════════════ -->
+<section class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <div>
+      <div class="section-title">التوافق مع المكتبات الأجنبية</div>
+      <div class="section-subtitle">Foreign Function Interface (FFI)</div>
+    </div>
+  </div>
+
+  <p>
+    تدعم أبجد استدعاء مكتبات C وGo وRust وPython مباشرةً دون طبقات تغليف إضافية. كما تدعم تصدير دوال أبجد لاستخدامها من تلك اللغات.
+  </p>
+
+  <h3>أ · استيراد مكتبات C</h3>
+  <div class="code-block" data-label="ج-تكامل.أبجد">
+<span class="cmt">// إعلان دوال C لاستخدامها مباشرةً</span>
+<span class="kw">خارجي</span> "ج" {
+    <span class="kw">دالة</span> <span class="fn">printf</span>(تنسيق: *<span class="kw">const</span> <span class="tp">طبيعي٨</span>, ...) -> <span class="tp">صحيح٣٢</span>
+    <span class="kw">دالة</span> <span class="fn">malloc</span>(حجم: <span class="tp">طبيعي٦٤</span>) -> *<span class="tp">طبيعي٨</span>
+    <span class="kw">دالة</span> <span class="fn">free</span>(مؤشر: *<span class="tp">طبيعي٨</span>)
+
+    <span class="cmt">// استخدام OpenSSL مثلاً</span>
+    <span class="kw">دالة</span> <span class="fn">SHA256</span>(بيانات: *<span class="kw">const</span> <span class="tp">طبيعي٨</span>، طول: <span class="tp">طبيعي٦٤</span>، خرج: *<span class="tp">طبيعي٨</span>) -> *<span class="tp">طبيعي٨</span>
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">غير_آمن</span> {
+        <span class="cmt">// استدعاء C يتطلب كتلة "غير_آمن" لصراحة القصد</span>
+        printf(<span class="str">b"مرحباً من C!\n\0"</span>.مؤشر())
+    }
+}
+  </div>
+
+  <h3>ب · استيراد مكتبات Go</h3>
+  <div class="code-block" data-label="جو-تكامل.أبجد">
+<span class="cmt">// يُولِّد مُجمِّع أبجد جسر CGo تلقائياً</span>
+<span class="kw">استورد</span> <span class="str">"go:github.com/gin-gonic/gin"</span> <span class="kw">كـ</span> جين
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> محرك = جين.الافتراضي()
+    محرك.احصل(<span class="str">"/مرحبا"</span>، |طلب، رد| {
+        رد.يسونل(<span class="num">٢٠٠</span>، { <span class="str">"رسالة"</span>: <span class="str">"مرحباً من أبجد وGo!"</span> })
+    })
+    محرك.شغِّل(<span class="str">":٨٠٨٠"</span>)
+}
+  </div>
+
+  <h3>ج · استيراد مكتبات Python عبر PyO3</h3>
+  <div class="code-block" data-label="بايثون-تكامل.أبجد">
+<span class="kw">استورد</span> <span class="str">"py:numpy"</span> <span class="kw">كـ</span> نمباي
+<span class="kw">استورد</span> <span class="str">"py:torch"</span> <span class="kw">كـ</span> تورش
+
+<span class="kw">دالة</span> <span class="fn">تدريب_نموذج</span>(بيانات: &amp;[<span class="tp">عشري٣٢</span>]) {
+    <span class="kw">متغير</span> مصفوفة = نمباي.مصفوفة(بيانات)
+    <span class="kw">متغير</span> نموذج = تورش.خطي(<span class="num">١٠</span>، <span class="num">١</span>)
+    <span class="cmt">// المُجمِّع يُدير تحويل الأنواع تلقائياً</span>
+}
+  </div>
+
+  <h3>د · تصدير أبجد إلى C</h3>
+  <div class="code-block" data-label="تصدير.أبجد">
+<span class="cmt">// يمكن استدعاء هذه الدالة من C أو أي لغة تدعم ABI-C</span>
+#[تصدير_ج]
+<span class="kw">عام</span> <span class="kw">دالة</span> <span class="fn">احسب_مجموع</span>(أ: <span class="tp">صحيح٣٢</span>، ب: <span class="tp">صحيح٣٢</span>) -> <span class="tp">صحيح٣٢</span> {
+    <span class="kw">أعد</span> أ + ب
+}
+<span class="cmt">// توليد ترويسة C تلقائياً: int احسب_مجموع(int32_t أ, int32_t ب);</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §9 PERF ═══════════════════════════════════ -->
+<section class="section" id="s9">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <div>
+      <div class="section-title">مقارنة الأداء المستهدف</div>
+      <div class="section-subtitle">Performance Targets</div>
+    </div>
+  </div>
+
+  <p>
+    الأداء المستهدف في الإصدار الأول يُوازي C في السرعة الخام ويتفوق على Go وJava في بعض سيناريوهات الحوسبة المكثفة:
+  </p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>المعيار</th>
+        <th class="hl">أبجد (مستهدف)</th>
+        <th>C / C++</th>
+        <th>Rust</th>
+        <th>Go</th>
+        <th>Python</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ضرب مصفوفات 1000×1000</td>
+        <td class="hl">~1.0×</td>
+        <td>1.0× (مرجع)</td>
+        <td>~1.0×</td>
+        <td>~1.5×</td>
+        <td>~80×</td>
+      </tr>
+      <tr>
+        <td>خادم HTTP (req/s)</td>
+        <td class="hl">&gt;500k/s</td>
+        <td>~600k/s</td>
+        <td>~550k/s</td>
+        <td>~400k/s</td>
+        <td>~30k/s</td>
+      </tr>
+      <tr>
+        <td>استهلاك RAM</td>
+        <td class="hl">منخفض جداً</td>
+        <td>منخفض</td>
+        <td>منخفض</td>
+        <td>متوسط</td>
+        <td>عالٍ</td>
+      </tr>
+      <tr>
+        <td>وقت بدء التشغيل</td>
+        <td class="hl">&lt;1ms</td>
+        <td>&lt;1ms</td>
+        <td>&lt;1ms</td>
+        <td>~3ms</td>
+        <td>&gt;100ms</td>
+      </tr>
+      <tr>
+        <td>بدون GC توقفات</td>
+        <td class="hl"><span class="tick">✓</span></td>
+        <td><span class="tick">✓</span></td>
+        <td><span class="tick">✓</span></td>
+        <td><span class="cross">✗</span></td>
+        <td><span class="cross">✗</span></td>
+      </tr>
+      <tr>
+        <td>أمان الذاكرة وقت الترجمة</td>
+        <td class="hl"><span class="tick">✓</span></td>
+        <td><span class="cross">✗</span></td>
+        <td><span class="tick">✓</span></td>
+        <td><span class="partial">~</span></td>
+        <td><span class="tick">✓</span></td>
+      </tr>
+      <tr>
+        <td>كتابة العربية أصيلة</td>
+        <td class="hl"><span class="tick">✓</span></td>
+        <td><span class="cross">✗</span></td>
+        <td><span class="cross">✗</span></td>
+        <td><span class="cross">✗</span></td>
+        <td><span class="cross">✗</span></td>
+      </tr>
+      <tr>
+        <td>استيراد مكتبات C مباشرةً</td>
+        <td class="hl"><span class="tick">✓</span></td>
+        <td><span class="tick">✓</span></td>
+        <td><span class="tick">✓</span></td>
+        <td><span class="tick">✓</span></td>
+        <td><span class="tick">✓</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════ §10 TOOLS ═══════════════════════════════════ -->
+<section class="section" id="s10">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <div>
+      <div class="section-title">البيئة والأدوات</div>
+      <div class="section-subtitle">Tooling & Ecosystem</div>
+    </div>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📦</span>
+      <div class="feature-name">أبجد-حزم</div>
+      <div class="feature-desc">مدير حزم رسمي. فهرس مركزي (مثل crates.io) باللغة العربية. دعم إصدار تلقائي وإدارة إصدارات بـ SemVer</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎨</span>
+      <div class="feature-name">أبجد-نسّق</div>
+      <div class="feature-desc">أداة تنسيق تلقائي للكود. تُطبِّق معيار تنسيق واحد على كل كود أبجد في العالم</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔍</span>
+      <div class="feature-name">أبجد-تحقق</div>
+      <div class="feature-desc">أداة تدقيق (Linter) تكشف الأنماط المشبوهة وتقترح تحسينات بالعربية</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🐛</span>
+      <div class="feature-name">أبجد-صحِّح</div>
+      <div class="feature-desc">مُصحِّح تفاعلي (Debugger) يتكامل مع GDB وLLDB مع واجهة عربية كاملة</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📋</span>
+      <div class="feature-name">بروتوكول LSP</div>
+      <div class="feature-desc">خادم LSP لدعم VS Code وNeoVim وJetBrains. إكمال تلقائي، فحص فوري، قفز للتعريف</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🧪</span>
+      <div class="feature-name">إطار الاختبار</div>
+      <div class="feature-desc">اختبارات وحدة ودمج مدمَّجة. دوال الاختبار تُعلَّم بـ #[اختبار]. تغطية الكود مدمَّجة</div>
+    </div>
+  </div>
+
+  <h3>مثال — الاختبارات</h3>
+  <div class="code-block" data-label="اختبارات.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/اختبار"</span>
+
+<span class="kw">دالة</span> <span class="fn">جمع</span>(أ: <span class="tp">صحيح٣٢</span>، ب: <span class="tp">صحيح٣٢</span>) -> <span class="tp">صحيح٣٢</span> { أ + ب }
+
+#[اختبار]
+<span class="kw">دالة</span> <span class="fn">اختبر_الجمع_الأساسي</span>() {
+    تأكد(جمع(<span class="num">٢</span>، <span class="num">٣</span>) == <span class="num">٥</span>)
+    تأكد(جمع(<span class="num">-١</span>، <span class="num">١</span>) == <span class="num">٠</span>)
+}
+
+#[اختبار]
+#[يتوقع_خطأ(نوع = "قسمة_على_صفر")]
+<span class="kw">دالة</span> <span class="fn">اختبر_القسمة_على_صفر</span>() {
+    <span class="kw">متغير</span> _ = <span class="num">١٠</span> / <span class="num">٠</span>
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §11 SIDRAUI ═══════════════════════════════════ -->
+<section class="section" id="s11">
+  <div class="section-header">
+    <span class="section-num">11</span>
+    <div>
+      <div class="section-title">SidraUI — مكتبة الواجهات الرسومية</div>
+      <div class="section-subtitle">Custom GUI Library with Vulkan Rendering</div>
+    </div>
+  </div>
+
+  <p>
+    <strong>SidraUI (سدرة)</strong> هي مكتبة الواجهات الرسومية الرسمية لأبجد — مكتوبة بالكامل بلغة أبجد وتستخدم Vulkan للعرض. تُلهم من SwiftUI وshadcn/ui مع تصميم عربي أصيل RTL ودعم كامل للزجاج المصنّع (Frosted Glass) والرسوم المتحركة السلسة.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🎨</span>
+      <div class="feature-name">Vulkan Native</div>
+      <div class="feature-desc">عرض مباشر عبر Vulkan مع تحسينات GPU كاملة. دعم Ray Tracing وCompute Shaders</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">✨</span>
+      <div class="feature-name">SwiftUI-like Declarative</div>
+      <div class="feature-desc">واجهة تعريفية كاملة بالعربية. الكود يصف ما تريده، ليس كيفية رسمه</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🪟</span>
+      <div class="feature-name">Frosted Glass</div>
+      <div class="feature-desc">تأثيرات الزجاج المصنّع المدمجة. Blur، Transparency، Acrylic effects</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔄</span>
+      <div class="feature-name">Animations</div>
+      <div class="feature-desc">نظام رسوم متحركة قوي مع Spring Physics، Easing Functions، Keyframe Animations</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌐</span>
+      <div class="feature-name">RTL First</div>
+      <div class="feature-desc">تصميم RTL أصيل من الأساس. لا تضبيط يدوي — كل شيء يُحسب تلقائياً</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎭</span>
+      <div class="feature-name">Translation System</div>
+      <div class="feature-desc">نظام ترجمة قوي مثل PO مع دعم كامل للعربية. i18n/l10n مدمجة</div>
+    </div>
+  </div>
+
+  <h3>مثال — واجهة SidraUI</h3>
+  <div class="code-block" data-label="واجهة.أبجد">
+<span class="kw">استورد</span> <span class="str">"سدرة"</span>
+<span class="kw">استورد</span> <span class="str">"سدرة/مكونات"</span>
+
+<span class="kw">هيكل</span> <span class="tp">تطبيق_رئيسي</span> {
+    اسم: <span class="tp">نص</span>
+    عدد: <span class="tp">صحيح٣٢</span>
+}
+
+<span class="kw">نفِّذ</span> <span class="tp">تطبيق</span> <span class="kw">لـ</span> <span class="tp">تطبيق_رئيسي</span> {
+    <span class="kw">دالة</span> <span class="fn">واجهة</span>(<span class="op">&amp;</span>ذات) -> <span class="tp">واجهة_رسمية</span> {
+        <span class="kw">أعد</span> نافذة {
+            عنوان: <span class="str">"تطبيق أبجد"</span>،
+            خلفية: تدرج_لوني([ذهبي، أسود])،
+            محتوى: عمود {
+                تباعد: <span class="num">٢٠</span>،
+                حواف: <span class="num">٤٠</span>،
+
+                نص {
+                    حجم: <span class="num">٣٢</span>،
+                    وزن: غليظ،
+                    محتوى: <span class="str">"مرحباً بالعالم!"</span>
+                }،
+
+                زجاج {
+                    شفافية: <span class="num">٠.٨</span>،
+                    blur: <span class="num">٢٠</span>،
+                    محتوى: بطاقة {
+                        عنوان: <span class="str">"عداد"</span>،
+                        جسم: نص("{}"، ذات.عدد)
+                    }
+                }،
+
+                زر {
+                    عنوان: <span class="str">"زيادة"</span>،
+                    عند_النقر: |<span class="op">&amp;</span>متغير ذات| {
+                        ذات.عدد += <span class="num">١</span>
+                    }
+                }،
+
+                رسوم_متححة {
+                    مدة: <span class="num">٠.٣</span>،
+                    من: شفافية(<span class="num">٠</span>)،
+                    إلى: شفافية(<span class="num">١</span>)
+                }
+            }
+        }
+    }
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    شغِّل(تطبيق_رئيسي {
+        اسم: <span class="str">"أبجد"</span>،
+        عدد: <span class="num">٠</span>
+    })
+}
+  </div>
+
+  <h3>مكونات SidraUI المدمجة</h3>
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>الفئة</th>
+        <th>المكونات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>التخطيط</td><td class="mono">عمود، صف، شبكة، مكدس، تدفق، تمرير</td></tr>
+      <tr><td>النصوص</td><td class="mono">نص، عنوان، فقرة، رمز، كود</td></tr>
+      <tr><td>الإدخال</td><td class="mono">زر، حقل_نص، مفتاح_تبديل، شريط_تمرير، منتقي</td></tr>
+      <tr><td>العرض</td><td class="mono">صورة، فيديو، قماش، رسم_ثلاثي_الأبعاد</td></tr>
+      <tr><td>الحاويات</td><td class="mono">بطاقة، لوحة، نافذة، قائمة، قائمة_منسدلة</td></tr>
+      <tr><td>التأثيرات</td><td class="mono">زجاج، ظل، تدرج، تحويل، رسوم_متححة</td></tr>
+    </tbody>
+  </table>
+
+  <h3>نظام الترجمة المدمج</h3>
+  <div class="code-block" data-label="ترجمة.أبجد">
+<span class="kw">استورد</span> <span class="str">"سدرة/ترجمة"</span>
+
+<span class="cmt">// تعريف ملفات الترجمة بصيغة عربية</span>
+<span class="kw">ترجمة</span> <span class="str">"عربي"</span> {
+    <span class="str">"مرحبا"</span>: <span class="str">"مرحباً"</span>،
+    <span class="str">"وداعا"</span>: <span class="str">"مع السلامة"</span>،
+    <span class="str">"زر_إرسال"</span>: <span class="str">"إرسال"</span>
+}
+
+<span class="kw">ترجمة</span> <span class="str">"إنجليزي"</span> {
+    <span class="str">"مرحبا"</span>: <span class="str">"Hello"</span>،
+    <span class="str">"وداعا"</span>: <span class="str">"Goodbye"</span>،
+    <span class="str">"زر_إرسال"</span>: <span class="str">"Send"</span>
+}
+
+<span class="cmt">// استخدام الترجمة في الواجهة</span>
+نص {
+    محتوى: ترجم(<span class="str">"مرحبا"</span>)
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §12 SARAB ═══════════════════════════════════ -->
+<section class="section" id="s12">
+  <div class="section-header">
+    <span class="section-num">12</span>
+    <div>
+      <div class="section-title">سَرَاب — إطار تطوير الألعاب</div>
+      <div class="section-subtitle">Game Development Framework (Sarab - Mirage)</div>
+    </div>
+  </div>
+
+  <p>
+    <strong>سَرَاب (Sarab)</strong> هو إطار تطوير الألعاب الرسمي لأبجد — مدمج بالكامل مع SidraUI ومبني على Vulkan. يوفر محرك ألعاب كامل مع فيزياء، رسومات ثلاثية الأبعاد، صوت، شبكات، وأدوات تطوير متقدمة.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🎮</span>
+      <div class="feature-name">Vulkan Engine</div>
+      <div class="feature-desc">محرك رسومي مبني على Vulkan مع PBR، Ray Tracing، Compute Shaders</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-name">ECS Architecture</div>
+      <div class="feature-desc">نظام Entity-Component-System عالي الأداء مع موازنة تلقائية</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌍</span>
+      <div class="feature-name">Physics Engine</div>
+      <div class="feature-desc">محرك فيزياء متكامل مع Rigid Body، Soft Body، Collision Detection</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔊</span>
+      <div class="feature-name">Audio System</div>
+      <div class="feature-desc">نظام صوتي ثلاثي الأبعاد مع Spatial Audio، HRTF، Audio Middleware Integration</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌐</span>
+      <div class="feature-name">Networking</div>
+      <div class="feature-desc">شبكات متعددة اللاعبين مع Server-Client، P2P، Matchmaking</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🛠️</span>
+      <div class="feature-name">Editor Tools</div>
+      <div class="feature-desc">محرر رسومي متكامل بالعربية مع Scene Editor، Asset Browser، Profiler</div>
+    </div>
+  </div>
+
+  <h3>مثال — لعبة بسيطة بسَرَاب</h3>
+  <div class="code-block" data-label="لعبة.أبجد">
+<span class="kw">استورد</span> <span class="str">"سراب"</span>
+<span class="kw">استورد</span> <span class="str">"سراب/فيزياء"</span>
+<span class="kw">استورد</span> <span class="str">"سراب/رسومات"</span>
+
+<span class="kw">هيكل</span> <span class="tp">لاعب</span> {
+    موقع: <span class="tp">متجه٣</span>،
+    سرعة: <span class="tp">متجه٣</span>،
+    صحة: <span class="tp">عشري٦٤</span>
+}
+
+<span class="kw">نفِّذ</span> <span class="tp">مكون</span> <span class="kw">لـ</span> <span class="tp">لاعب</span> {
+    <span class="kw">دالة</span> <span class="fn">تحديث</span>(<span class="op">&amp;</span>متغير ذات، دلتا_الوقت: <span class="tp">عشري٦٤</span>) {
+        <span class="cmt">// تحديث الفيزياء</span>
+        ذات.موقع += ذات.سرعة * دلتا_الوقت
+
+        <span class="cmt">// تطبيق الجاذبية</span>
+        ذات.سرعة.ص -= <span class="num">٩.٨</span> * دلتا_الوقت
+    }
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> لعبة = محرك_الألعاب::جديد()
+
+    <span class="cmt">// إنشاء مشهد</span>
+    <span class="kw">متغير</span> مشهد = لعبة.أنشئ_مشهد(<span class="str">"المشهد_الرئيسي"</span>)
+
+    <span class="cmt">// إضافة إضاءة</span>
+    مشهد.أضف_إضاءة(إضاءة_مباشرة {
+        اتجاه: متجه٣(<span class="num">٠</span>، <span class="num">-١</span>، <span class="num">٠</span>)،
+        لون: أبيض،
+        شدة: <span class="num">١.٠</span>
+    })
+
+    <span class="cmt">// إضافة لاعب</span>
+    <span class="kw">متغير</span> كيان_اللاعب = مشهد.أنشئ_كيان()
+    كيان_اللاعب.أضف_مكون(لاعب {
+        موقع: متجه٣(<span class="num">٠</span>، <span class="num">٥</span>، <span class="num">٠</span>)،
+        سرعة: متجه٣(<span class="num">٠</span>، <span class="num">٠</span>، <span class="num">٠</span>)،
+        صحة: <span class="num">١٠٠.٠</span>
+    })
+
+    <span class="cmt">// إضافة جسم فيزيائي</span>
+    كيان_اللاعب.أضف_مكون(جسم_صلب {
+        شكل: كرة،
+        نصف_القطر: <span class="num">١.٠</span>،
+        كتلة: <span class="num">٧٠.٠</span>
+    })
+
+    <span class="cmt">// تشغيل اللعبة</span>
+    لعبة.شغِّل()
+}
+  </div>
+
+  <h3>مكونات سَرَاب الأساسية</h3>
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>النظام</th>
+        <th>المكونات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>الرسومات</td><td class="mono">مشهد، كاميرا، إضاءة، مواد، شبكات، رسوم_متححة، جسيمات</td></tr>
+      <tr><td>الفيزياء</td><td class="mono">جسم_صلب، جسم_لين، مفصل، تصادم، محاكاة_سوائل</td></tr>
+      <tr><td>الصوت</td><td class="kw">مصدر_صوت، مستمع، صوت_مكاني، خلط، تأثيرات</td></tr>
+      <tr><td>الإدخال</td><td class="mono">لوحة_مفاتيح، فأرة، يد_تحكم، لمس، مدخلات_VR</td></tr>
+      <tr><td>الشبكات</td><td class="mono">خادم، عميل، مزامنة، RPC، Matchmaking</td></tr>
+      <tr><td>الذكاء</td><td class="mono">نظام_سلوك، شجرة_قرار، مسار_أ، تعلم_آلي</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════ §13 AI ═══════════════════════════════════ -->
+<section class="section" id="s13">
+  <div class="section-header">
+    <span class="section-num">13</span>
+    <div>
+      <div class="section-title">الذكاء الاصطناعي المدمج</div>
+      <div class="section-subtitle">Built-in AI Capabilities</div>
+    </div>
+  </div>
+
+  <p>
+    تُدمج أبجد ميزات الذكاء الاصطناعي مباشرة في اللغة — من التعلم الآلي إلى المعالجة الطبيعية، مع دعم كامل للغة العربية والنماذج المحلية.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🧠</span>
+      <div class="feature-name">ML Library</div>
+      <div class="feature-desc">مكتبة تعلم آلي مدمجة مع Neural Networks، Deep Learning، AutoML</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📝</span>
+      <div class="feature-name">NLP Arabic</div>
+      <div class="feature-desc">معالجة اللغة الطبيعية العربية مع Tokenization، Stemming، Sentiment Analysis</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🤖</span>
+      <div class="feature-name">Local LLMs</div>
+      <div class="feature-desc">دعم تشغيل نماذج اللغة الكبيرة محلياً مع quantization وoptimization</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">👁️</span>
+      <div class="feature-name">Computer Vision</div>
+      <div class="feature-desc">رؤية حاسوبية مع Object Detection، Image Classification، Face Recognition</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-name">GPU Acceleration</div>
+      <div class="feature-desc">تسريع GPU عبر CUDA، ROCm، Vulkan Compute، Metal</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔮</span>
+      <div class="feature-name">AI Assistant</div>
+      <div class="feature-desc">مساعد برمجة AI مدمج يفهم الكود العربي ويقترح تحسينات</div>
+    </div>
+  </div>
+
+  <h3>مثال — التعلم الآلي</h3>
+  <div class="code-block" data-label="ذكاء.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/ذكاء"</span>
+<span class="kw">استورد</span> <span class="str">"أبجد/ذكاء/شبكات"</span>
+
+<span class="cmt">// تعريف شبكة عصبية بسيطة</span>
+<span class="kw">هيكل</span> <span class="tp">شبكة_تصنيف</span> {
+    طبقات: <span class="tp">قائمة</span>[<span class="tp">طبقة</span>]
+}
+
+<span class="kw">نفِّذ</span> <span class="tp">نموذج</span> <span class="kw">لـ</span> <span class="tp">شبكة_تصنيف</span> {
+    <span class="kw">دالة</span> <span class="fn">توقع</span>(<span class="op">&amp;</span>ذات، مدخلات: <span class="tp">موتر</span>) -> <span class="tp">موتر</span> {
+        <span class="kw">متغير</span> مخرجات = مدخلات
+        <span class="kw">لكل</span> طبقة <span class="kw">في</span> ذات.طبقات {
+            مخرجات = طبقة.أمام(مخرجات)
+        }
+        <span class="kw">أعد</span> مخرجات
+    }
+
+    <span class="kw">دالة</span> <span class="fn">تدريب</span>(<span class="op">&amp;</span>متغير ذات، بيانات: <span class="tp">مجموعة_بيانات</span>) {
+        <span class="kw">لكل</span> عصر <span class="kw">في</span> <span class="num">٠..١٠٠</span> {
+            <span class="kw">لكل</span> دفعة <span class="kw">في</span> بيانات.دفعات() {
+                <span class="kw">متغير</span> خسارة = ذات.احسب_الخسارة(دفعة)
+                ذات.تحديث_الأوزان(خسارة)
+            }
+        }
+    }
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> نموذج = شبكة_تصنيف {
+        طبقات: [
+            طبقة_كثيفة { مدخلات: <span class="num">٧٨٤</span>، مخرجات: <span class="num">١٢٨</span>، تفعيل: relu }،
+            طبقة_كثيفة { مدخلات: <span class="num">١٢٨</span>، مخرجات: <span class="num">٦٤</span>، تفعيل: relu }،
+            طبقة_كثيفة { مدخلات: <span class="num">٦٤</span>، مخرجات: <span class="num">١٠</span>، تفعيل: softmax }
+        ]
+    }
+
+    <span class="kw">متغير</span> بيانات = حمل_مجموعة(<span class="str">"mnist.أبجد"</span>)
+    نموذج.تدريب(بيانات)
+}
+  </div>
+
+  <h3>مثال — معالجة اللغة العربية</h3>
+  <div class="code-block" data-label="نصوص.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/ذكاء/نصوص"</span>
+
+<span class="kw">دالة</span> <span class="fn">حلل_نص</span>(نص: <span class="tp">نص</span>) -> <span class="tp">تحليل</span> {
+    <span class="kw">متغير</span> رموز = توكينز(نص)
+    <span class="kw">متغير</span> جذور = استخراج_الجذور(رموز)
+    <span class="kw">متغير</span> مشاعر = تحليل_المشاعر(نص)
+
+    <span class="kw">أعد</span> تحليل {
+        رموز،
+        جذور،
+        مشاعر،
+        تصنيف: صنف_النص(نص)
+    }
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> نص = <span class="str">"هذا يوم جميل جداً"</span>
+    <span class="kw">متغير</span> نتيجة = حلل_نص(نص)
+    طباعة("المشاعر: {}"، نتيجة.مشاعر)
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §14 ISLAMIC ═══════════════════════════════════ -->
+<section class="section" id="s14">
+  <div class="section-header">
+    <span class="section-num">14</span>
+    <div>
+      <div class="section-title">الميزات الإسلامية والعربية</div>
+      <div class="section-subtitle">Islamic & Arabian Features</div>
+    </div>
+  </div>
+
+  <p>
+    تُدمج أبجد ميزات إسلامية وعربية أصيلة في اللغة والمكتبات — من التاريخ الهجري إلى أحكام الصلاة، مع دعم كامل للنصوص العربية والزخارف الإسلامية.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📅</span>
+      <div class="feature-name">التاريخ الهجري</div>
+      <div class="feature-desc">دعم كامل للتقويم الهجري مع تحويل التواريخ وحساب الأشهر القمرية</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🕌</span>
+      <div class="feature-name">أحكام الصلاة</div>
+      <div class="feature-desc">حساب أوقات الصلاة، القبلة، الأذان، والتقويم الإسلامي</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📖</span>
+      <div class="feature-name">القرآن الكريم</div>
+      <div class="feature-desc">مكتبة القرآن الكريم مع البحث، التفسير، والتجويد</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">✍️</span>
+      <div class="feature-name">الخط العربي</div>
+      <div class="feature-desc">دعم أنواع الخطوط العربية مع الزخارف والنقوش الإسلامية</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔢</span>
+      <div class="feature-name">الأرقام العربية</div>
+      <div class="feature-desc">دعم الأرقام العربية الهندية (٠-٩) والأرقام المشرقية</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌙</span>
+      <div class="feature-name">الأهلة والمناسبات</div>
+      <div class="feature-desc">حساب الأهلة، المناسبات الإسلامية، والتقاويم الخاصة</div>
+    </div>
+  </div>
+
+  <h3>مثال — أحكام الصلاة</h3>
+  <div class="code-block" data-label="صلاة.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/إسلامي"</span>
+<span class="kw">استورد</span> <span class="str">"أبجد/إسلامي/صلاة"</span>
+
+<span class="kw">دالة</span> <span class="fn">أوقات_الصلاة_اليوم</span>(الموقع: <span class="tp">إحداثيات</span>) -> <span class="tp">أوقات</span> {
+    <span class="kw">متغير</span> تاريخ = التاريخ_الهجري::اليوم()
+    <span class="kw">متغير</span> أوقات = حساب_الأوقات(الموقع، تاريخ)
+
+    <span class="kw">أعد</span> أوقات {
+        فجر: أوقات.فجر،
+        شروق: أوقات.شروق،
+        ظهر: أوقات.ظهر،
+        عصر: أوقات.عصر،
+        مغرب: أوقات.مغرب،
+        عشاء: أوقات.عشاء
+    }
+}
+
+<span class="kw">دالة</span> <span class="fn">اتجاه_القبلة</span>(من: <span class="tp">إحداثيات</span>) -> <span class="tp">درجة</span> {
+    <span class="kw">متغير</span> مكة = إحداثيات { خط_العرض: <span class="num">٢١.٤٢٢٥</span>، خط_الطول: <span class="num">٣٩.٨٢٦١٦</span> }
+    <span class="kw">أعد</span> حساب_البوصلة(من، مكة)
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> موقعي = إحداثيات { خط_العرض: <span class="num">٢٤.٧١٣٦</span>، خط_الطول: <span class="num">٤٦.٦٧٥٣</span> }
+    <span class="kw">متغير</span> أوقات = أوقات_الصلاة_اليوم(موقعي)
+    <span class="kw">متغير</span> قبلة = اتجاه_القبلة(موقعي)
+
+    طباعة("أوقات الصلاة: {}"، أوقات)
+    طباعة("اتجاه القبلة: {} درجة"، قبلة)
+}
+  </div>
+
+  <h3>مثال — القرآن الكريم</h3>
+  <div class="code-block" data-label="قرآن.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/إسلامي/قرآن"</span>
+
+<span class="kw">دالة</span> <span class="fn">ابحث_في_القرآن</span>(كلمة: <span class="tp">نص</span>) -> <span class="tp">قائمة</span>[<span class="tp">آية</span>] {
+    <span class="kw">متغير</span> نتائج = قرآن.بحث(كلمة)
+    <span class="kw">أعد</span> نتائج.خريطة(|آية| {
+        آية {
+            سورة: آية.اسم_السورة،
+            رقم: آية.رقم_الآية،
+            نص: آية.نص_الآية،
+            تفسير: آية.تفسير_الميسر
+        }
+    })
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> آيات = ابحث_في_القرآن(<span class="str">"رحمة"</span>)
+    <span class="kw">لكل</span> آية <span class="kw">في</span> آيات {
+        طباعة("{}: {}"، آية.سورة، آية.نص)
+    }
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §15 NETWORKING ═══════════════════════════════════ -->
+<section class="section" id="s15">
+  <div class="section-header">
+    <span class="section-num">15</span>
+    <div>
+      <div class="section-title">الشبكات والأمن السيبراني</div>
+      <div class="section-subtitle">Networking & Cybersecurity</div>
+    </div>
+  </div>
+
+  <p>
+    توفر أبجد مكتبات شبكات وأمن سيبراني قوية — من البرمجة غير المتزامنة إلى التشفير، مع دعم كامل للبروتوكولات الحديثة وأدوات الأمن المتقدمة.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🌐</span>
+      <div class="feature-name">Async Networking</div>
+      <div class="feature-desc">شبكات غير متزامنة مع TCP/UDP، HTTP/HTTPS، WebSocket، gRPC</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔒</span>
+      <div class="feature-name">Cryptography</div>
+      <div class="feature-desc">تشفير قوي مع AES، RSA، ECC، SHA، HMAC، TLS 1.3</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🛡️</span>
+      <div class="feature-name">Security Tools</div>
+      <div class="feature-desc">أدوات أمن مع Penetration Testing، Vulnerability Scanning، Forensics</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔐</span>
+      <div class="feature-name">Authentication</div>
+      <div class="feature-desc">مصادقة قوية مع OAuth2، JWT، SAML، PKI، Biometrics</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📡</span>
+      <div class="feature-name">Protocol Support</div>
+      <div class="feature-desc">دعم MQTT، CoAP，AMQP، DNS، DHCP، SMTP، FTP</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-name">High Performance</div>
+      <div class="feature-desc">أداء عالي مع Zero-copy، io_uring，epoll، kqueue</div>
+    </div>
+  </div>
+
+  <h3>مثال — خادم HTTP غير متزامن</h3>
+  <div class="code-block" data-label="شبكة.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/شبكة"</span>
+<span class="kw">استورد</span> <span class="str">"أبجد/شبكة/http"</span>
+
+<span class="kw">دالة</span> <span class="fn">غير_متزامن</span> <span class="fn">معالج_الطلب</span>(طلب: <span class="tp">طلب</span>) -> <span class="tp">رد</span> {
+    <span class="kw">مطابق</span> request.مسار {
+        <span class="str">"/"</span> => <span class="kw">أعد</span> رد {
+            حالة: <span class="num">٢٠٠</span>،
+            جسم: <span class="str">"مرحباً بالعالم!"</span>
+        }،
+        <span class="str">"/api/بيانات"</span> => {
+            <span class="kw">متغير</span> بيانات = <span class="kw">انتظر</span> قاعدة_البيانات.استعلام(<span class="str">"SELECT * FROM users"</span>)
+            <span class="kw">أعد</span> رد {
+                حالة: <span class="num">٢٠٠</span>،
+                جسم: إلى_يسونل(بيانات)
+            }
+        }،
+        _ => <span class="kw">أعد</span> رد {
+            حالة: <span class="num">٤٠٤</span>،
+            جسم: <span class="str">"غير موجود"</span>
+        }
+    }
+}
+
+<span class="kw">دالة</span> <span class="fn">غير_متزامن</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> خادم = خادم_http::جديد()
+    خادم.مسار(<span class="str">"/"</span>، معالج_الطلب)
+    خادم.استمع(<span class="str">":٨٠٨٠"</span>).انتظر
+}
+  </div>
+
+  <h3>مثال — التشفير</h3>
+  <div class="code-block" data-label="تشفير.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/أمن"</span>
+<span class="kw">استورد</span> <span class="str">"أبجد/أمن/تشفير"</span>
+
+<span class="kw">دالة</span> <span class="fn">شفّر_البيانات</span>(بيانات: <span class="tp">بايت[]</span>، مفتاح: <span class="tp">بايت[]</span>) -> <span class="tp">نتيجة</span>[<span class="tp">بايت[]</span>، <span class="tp">خطأ</span>] {
+    <span class="kw">متغير</span> تشفير = AES::جديد(مفتاح، وضع: GCM)
+    <span class="kw">أعد</span> تشفير.شفّر(بيانات)
+}
+
+<span class="kw">دالة</span> <span class="fn">فكّ_البيانات</span>(بيانات: <span class="tp">بايت[]</span>، مفتاح: <span class="tp">بايت[]</span>) -> <span class="tp">نتيجة</span>[<span class="tp">بايت[]</span>، <span class="tp">خطأ</span>] {
+    <span class="kw">متغير</span> تشفير = AES::جديد(مفتاح، وضع: GCM)
+    <span class="kw">أعد</span> تشفير.فك(بيانات)
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> مفتاح = توليد_مفتاح(<span class="num">٢٥٦</span>)
+    <span class="kw">متغير</span> بيانات = <span class="str">"بيانات سرية"</span>.بايت()
+
+    <span class="kw">متغير</span> مشفّر = شفّر_البيانات(بيانات، مفتاح)
+    <span class="kw">متغير</span> مفكوك = فكّ_البيانات(مشفّر?، مفتاح)
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §16 WEBDEV ═══════════════════════════════════ -->
+<section class="section" id="s16">
+  <div class="section-header">
+    <span class="section-num">16</span>
+    <div>
+      <div class="section-title">تطوير الويب والإطار الكامل</div>
+      <div class="section-subtitle">Web Development & Full Stack Framework</div>
+    </div>
+  </div>
+
+  <p>
+    توفر أبجد إطار تطوير ويب كامل — من الواجهة الأمامية إلى الخلفية، مع دعم WebAssembly، SSR، وAPIs حديثة.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🌐</span>
+      <div class="feature-name">WebAssembly</div>
+      <div class="feature-desc">دعم كامل لـ WebAssembly مع تحسينات للأداء</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚛️</span>
+      <div class="feature-name">React-like</div>
+      <div class="feature-desc">إطار واجهة أمامية يشبه React مع Virtual DOM</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔧</span>
+      <div class="feature-name">Backend Framework</div>
+      <div class="feature-desc">إطار خلفي قوي مع Routing، Middleware، ORM</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🗄️</span>
+      <div class="feature-name">Database ORM</div>
+      <div class="feature-desc">ORM قوي مع دعم SQL وNoSQL</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📡</span>
+      <div class="feature-name">Real-time</div>
+      <div class="feature-desc">دعم WebSocket، Server-Sent Events، GraphQL</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔐</span>
+      <div class="feature-name">Auth & Security</div>
+      <div class="feature-desc">مصادقة وأمان مدمج مع JWT، Sessions، CSRF Protection</div>
+    </div>
+  </div>
+
+  <h3>مثال — تطبيق ويب كامل</h3>
+  <div class="code-block" data-label="ويب.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/ويب"</span>
+<span class="kw">استورد</span> <span class="str">"أبجد/ويب/واجهة"</span>
+<span class="kw">استورد</span> <span class="str">"أبجد/ويب/خلفية"</span>
+
+<span class="cmt">// الواجهة الأمامية</span>
+<span class="kw">مكون</span> <span class="tp">تطبيق_الويب</span> {
+    حالة: {
+        عدد: <span class="tp">صحيح٣٢</span> = <span class="num">٠</span>
+    }
+
+    <span class="kw">دالة</span> <span class="fn">عرض</span>(<span class="op">&amp;</span>ذات) -> <span class="tp">عنصر</span> {
+        <span class="kw">أعد</span> div {
+            className: <span class="str">"تطبيق"</span>،
+            children: [
+                h1 { <span class="str">"العداد: {}"</span>، ذات.حالة.عدد }،
+                button {
+                    onClick: |<span class="op">&amp;</span>متغير ذات| {
+                        ذات.حالة.عدد += <span class="num">١</span>
+                    }،
+                    <span class="str">"زيادة"</span>
+                }
+            ]
+        }
+    }
+}
+
+<span class="cmt">// الخلفية</span>
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> تطبيق = إطار_الويب::جديد()
+
+    <span class="cmt">// API routes</span>
+    تطبيق.مسار(<span class="str">"/api/العدد"</span>، |طلب| {
+        <span class="kw">أعد</span> يسونل({ <span class="str">"عدد"</span>: <span class="num">٤٢</span> })
+    })
+
+    <span class="cmt">// Static files</span>
+    تطبيق.ملفات_ثابتة(<span class="str">"./عام"</span>)
+
+    <span class="cmt">// SSR</span>
+    تطبيق.عرض_على_الخادم(<span class="tp">تطبيق_الويب</span>)
+
+    تطبيق.استمع(<span class="str">":٣٠٠٠"</span>)
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §17 IDE ═══════════════════════════════════ -->
+<section class="section" id="s17">
+  <div class="section-header">
+    <span class="section-num">17</span>
+    <div>
+      <div class="section-title">بيئة التطوير المتكاملة (IDE)</div>
+      <div class="section-subtitle">Integrated Development Environment</div>
+    </div>
+  </div>
+
+  <p>
+    <strong>أبجد-IDE</strong> هي بيئة التطوير المتكاملة الرسمية — مصممة خصيصاً للغات RTL مع ميزات من Zed، VS Code، JetBrains، Xcode، وAndroid Studio.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🔄</span>
+      <div class="feature-name">RTL Native</div>
+      <div class="feature-desc">تصميم RTL أصيل من الأساس. كل واجهة ومحرر يدعم العربية</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-name">Performance</div>
+      <div class="feature-desc">أداء عالي مثل Zed مع GPU rendering وlazy loading</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🧠</span>
+      <div class="feature-name">AI Assistant</div>
+      <div class="feature-desc">مساعد AI مدمج يفهم الكود العربي ويقترح تحسينات</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔍</span>
+      <div class="feature-name">Smart Search</div>
+      <div class="feature-desc">بحث ذكي مع Fuzzy Search، Regex، Semantic Search</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🐛</span>
+      <div class="feature-name">Debugger</div>
+      <div class="feature-desc">مصحح متكامل مع Breakpoints، Watch Variables، Call Stack</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎨</span>
+      <div class="feature-name">Themes</div>
+      <div class="feature-desc">سمات متعددة مع Dark/Light mode وتخصيص كامل</div>
+    </div>
+  </div>
+
+  <h3>ميزات IDE المتقدمة</h3>
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>الفئة</th>
+        <th>الميزات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>المحرر</td><td class="mono">Syntax Highlighting، Auto-indentation، Code Folding، Multi-cursor، Minimap</td></tr>
+      <tr><td>الإكمال</td><td class="mono">IntelliSense، Snippets، Live Templates، AI Suggestions</td></tr>
+      <tr><td>التنقل</td><td class="mono">Go to Definition، Find References، Symbol Search، File Navigator</td></tr>
+      <tr><td>الإعادة</td><td class="mono">Refactoring، Rename، Extract Function، Inline Variable</td></tr>
+      <tr><td>الإصدار</td><td class="mono">Git Integration، Diff View، Merge Tool، Blame</td></tr>
+      <tr><td>الاختبار</td><td class="mono">Test Runner، Coverage Report，Benchmarking</td></tr>
+      <tr><td>البناء</td><td class="mono">Build System، Task Runner، Terminal Integration</td></tr>
+      <tr><td>التصحيح</td><td class="mono">Breakpoints، Step Through، Watch، Memory View، CPU Profiler</td></tr>
+    </tbody>
+  </table>
+
+  <h3>التكامل مع الأدوات الأخرى</h3>
+  <div class="callout">
+    <strong>التوافق:</strong> أبجد-IDE تدعم LSP، Debug Adapter Protocol، ويمكنها التكامل مع VS Code Extensions، JetBrains Plugins، وEmacs/Nvim modes.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §18 ARABIC JSON ═══════════════════════════════════ -->
+<section class="section" id="s18">
+  <div class="section-header">
+    <span class="section-num">18</span>
+    <div>
+      <div class="section-title">يسونل العربي (Arabic JSON)</div>
+      <div class="section-subtitle">Custom JSON with Arabic Syntax</div>
+    </div>
+  </div>
+
+  <p>
+    <strong>يسونل العربي</strong> هو تنسيق بيانات يشبه JSON لكن بصيغة عربية RTL — يدعم الكلمات المفتاحية العربية، الأرقام العربية، والنصوص العربية بشكل أصيل.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🔄</span>
+      <div class="feature-name">RTL Format</div>
+      <div class="feature-desc">تنسيق RTL أصيل من اليمين إلى اليسار</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔤</span>
+      <div class="feature-name">Arabic Keys</div>
+      <div class="feature-desc">مفاتيح عربية بدلاً من الإنجليزية</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔢</span>
+      <div class="feature-name">Arabic Numbers</div>
+      <div class="feature-desc">دعم الأرقام العربية الهندية (٠-٩)</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📝</span>
+      <div class="feature-name">Comments</div>
+      <div class="feature-desc">دعم التعليقات بالعربية</div>
+    </div>
+    <tr><td>التوافق</td><td class="mono">يمكن التحويل من/إلى JSON القياسي</td></tr>
+    <tr><td>التحقق</td><td class="mono">Schema validation مع دعم Arabic types</td></tr>
+  </div>
+
+  <h3>مثال — يسونل العربي</h3>
+  <div class="code-block" data-label="بيانات.يسونل">
+{
+    <span class="str">"اسم"</span>: <span class="str">"أحمد"</span>،
+    <span class="str">"العمر"</span>: <span class="num">٢٥</span>،
+    <span class="str">"المهنة"</span>: <span class="str">"مبرمج"</span>،
+    <span class="str">"المهارات"</span>: [
+        <span class="str">"أبجد"</span>،
+        <span class="str">"راست"</span>،
+        <span class="str">"جولانغ"</span>
+    ]،
+    <span class="str">"العنوان"</span>: {
+        <span class="str">"المدينة"</span>: <span class="str">"الرياض"</span>،
+        <span class="str">"البلد"</span>: <span class="str">"السعودية"</span>
+    }
+}
+  </div>
+
+  <h3>الاستخدام في أبجد</h3>
+  <div class="code-block" data-label="استخدام.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/يسونل"</span>
+
+<span class="kw">دالة</span> <span class="fn">اقرأ_يسونل</span>(مسار: <span class="tp">نص</span>) -> <span class="tp">نتيجة</span>[<span class="tp">بيانات</span>، <span class="tp">خطأ</span>] {
+    <span class="kw">متغير</span> محتوى = <span class="kw">حاول</span> ملفات.اقرأ(مسار)
+    <span class="kw">أعد</span> يسونل.حلل(محتوى)
+}
+
+<span class="kw">دالة</span> <span class="fn">اكتب_يسونل</span>(بيانات: <span class="tp">بيانات</span>، مسار: <span class="tp">نص</span>) -> <span class="tp">نتيجة</span>[<span class="tp">وحدة</span>، <span class="tp">خطأ</span>] {
+    <span class="kw">متغير</span> محتوى = يسونل.سلسل(بيانات)
+    <span class="kw">أعد</span> ملفات.اكتب(مسار، محتوى)
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §19 MATH PHYSICS ═══════════════════════════════════ -->
+<section class="section" id="s19">
+  <div class="section-header">
+    <span class="section-num">19</span>
+    <div>
+      <div class="section-title">الرياضيات والفيزياء المتقدمة</div>
+      <div class="section-subtitle">Advanced Math & Physics (Fortran-like)</div>
+    </div>
+  </div>
+
+  <p>
+    توفر أبجد مكتبات رياضيات وفيزياء متقدمة — من الجبر الخطي إلى الميكانيكا الكمومية، مع أداء قريب من Fortran.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📐</span>
+      <div class="feature-name">Linear Algebra</div>
+      <div class="feature-desc">جبر خطي مع Matrices، Vectors، Eigenvalues، SVD</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📊</span>
+      <div class="feature-name">Statistics</div>
+      <div class="feature-desc">إحصاء متقدم مع Regression، Hypothesis Testing، Bayesian Analysis</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">∫</span>
+      <div class="feature-name">Calculus</div>
+      <div class="feature-desc">تفاضل وتكامل مع Symbolic Math، Numerical Integration</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚛️</span>
+      <div class="feature-name">Physics</div>
+      <div class="feature-desc">فيزياء متقدمة مع Quantum Mechanics، Thermodynamics، Fluid Dynamics</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔬</span>
+      <div class="feature-name">Scientific Computing</div>
+      <div class="feature-desc">حوسبة علمية مع FFT، ODE Solvers، Optimization</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-name">GPU Acceleration</div>
+      <div class="feature-desc">تسريع GPU عبر CUDA، OpenCL، Vulkan Compute</div>
+    </div>
+  </div>
+
+  <h3>مثال — الجبر الخطي</h3>
+  <div class="code-block" data-label="رياضيات.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/رياضيات"</span>
+<span class="kw">استورد</span> <span class="str">"أبجد/رياضيات/جبر_خطي"</span>
+
+<span class="kw">دالة</span> <span class="fn">حل_نظام_خطي</span>(أ: <span class="tp">مصفوفة</span>، ب: <span class="tp">متجه</span>) -> <span class="tp">متجه</span> {
+    <span class="cmt">// حل Ax = b باستخدام LU decomposition</span>
+    <span class="kw">متغير</span> (ل، يو، ب) = أ.تحلل_lu()
+    <span class="kw">متغير</span> ص = ل.حل_أمامي(ب)
+    <span class="kw">متغير</span> س = يو.حل_خلفي(ص)
+    <span class="kw">أعد</span> س
+}
+
+<span class="kw">دالة</span> <span class="fn">قيم_ذاتية</span>(أ: <span class="tp">مصفوفة</span>) -> <span class="tp">(متجهات، قيم)</span> {
+    <span class="cmt">// حساب القيم الذاتية باستخدام QR algorithm</span>
+    <span class="kw">أعد</span> أ.حل_qr()
+}
+
+<span class="kw">دالة</span> <span class="fn">رئيسية</span>() {
+    <span class="kw">متغير</span> أ = مصفوفة::من([
+        [<span class="num">٢</span>، <span class="num">١</span>]،
+        [<span class="num">١</span>، <span class="num">٢</span>]
+    ])
+    <span class="kw">متغير</span> ب = متجه::من([<span class="num">٣</span>، <span class="num">٣</span>])
+
+    <span class="kw">متغير</span> س = حل_نظام_خطي(أ، ب)
+    طباعة("الحل: {}"، س)
+}
+  </div>
+
+  <h3>مثال — الفيزياء</h3>
+  <div class="code-block" data-label="فيزياء.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/فيزياء"</span>
+<span class="kw">استورد</span> <span class="str">"أبجد/فيزياء/ميكانيكا"</span>
+
+<span class="kw">دالة</span> <span class="fn">حركة_القذيفة</span>(السرعة_الابتدائية: <span class="tp">عشري٦٤</span>، الزاوية: <span class="tp">عشري٦٤</span>) -> <span class="tp">مسار</span> {
+    <span class="kw">متغير</span> ج = <span class="num">٩.٨١</span>  <span class="cmt">// تسارع الجاذبية</span>
+    <span class="kw">متغير</span> ف₀ = السرعة_الابتدائية
+    <span class="kw">متغير</span> θ = الزاوية.إلى_راديان()
+
+    <span class="kw">متغير</span> ف₀_س = ف₀ * رياضيات.جيب(θ)
+    <span class="kw">متغير</span> ف₀_ص = ف₀ * رياضيات.جيب_التكميلي(θ)
+
+    <span class="kw">متغير</span> زمن_الطيران = (<span class="num">٢</span> * ف₀_ص) / ج
+    <span class="kw">متغير</span> المسافة_الأفقية = ف₀_س * زمن_الطيران
+    <span class="kw">متغير</span> الارتفاع_الأقصى = (ف₀_ص²) / (<span class="num">٢</span> * ج)
+
+    <span class="kw">أعد</span> مسار {
+        زمن_الطيران،
+        المسافة_الأفقية،
+        الارتفاع_الأقصى
+    }
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §20 LOW LEVEL ═══════════════════════════════════ -->
+<section class="section" id="s20">
+  <div class="section-header">
+    <span class="section-num">20</span>
+    <div>
+      <div class="section-title">الميزات منخفضة المستوى</div>
+      <div class="section-subtitle">Low-Level Features (C/Assembly-like)</div>
+    </div>
+  </div>
+
+  <p>
+    توفر أبجد ميزات منخفضة المستوى قوية — من التجميع المباشر إلى التحكم الدقيق بالأجهزة، مع أمان وقت الترجمة.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">⚙️</span>
+      <div class="feature-name">Inline Assembly</div>
+      <div class="feature-desc">تضمين Assembly مباشر مع دعم x86، ARM، RISC-V</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔧</span>
+      <div class="feature-name">Memory Control</div>
+      <div class="feature-desc">تحكم دقيق بالذاكرة مع Pointers، Allocations، Memory Mapping</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📡</span>
+      <div class="feature-name">Hardware Access</div>
+      <div class="feature-desc">الوصول المباشر للأجهزة مع I/O Ports، MMIO، Interrupts</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎯</span>
+      <div class="feature-name">SIMD</div>
+      <div class="feature-desc">دعم SIMD مع AVX، NEON، SVE، Auto-vectorization</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔒</span>
+      <div class="feature-name">Atomic Operations</div>
+      <div class="feature-desc">عمليات ذرية مع CAS، Fetch-Add، Memory Barriers</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⏱️</span>
+      <div class="feature-name">Real-time</div>
+      <div class="feature-desc">دعم Real-time مع Deterministic Timing، No GC pauses</div>
+    </div>
+  </div>
+
+  <h3>مثال — Inline Assembly</h3>
+  <div class="code-block" data-label="تجميع.أبجد">
+<span class="kw">دالة</span> <span class="fn">تبديل_البتات</span>(قيمة: <span class="tp">طبيعي٦٤</span>) -> <span class="tp">طبيعي٦٤</span> {
+    <span class="kw">تجميع!</span> {
+        <span class="str">"bswap {0}"</span>،
+        inout(reg) قيمة
+    }
+    <span class="kw">أعد</span> قيمة
+}
+
+<span class="kw">دالة</span> <span class="fn">عدد_البتات</span>(قيمة: <span class="tp">طبيعي٦٤</span>) -> <span class="tp">طبيعي٦٤</span> {
+    <span class="kw">تجميع!</span> {
+        <span class="str">"popcnt {0}, {0}"</span>،
+        inout(reg) قيمة
+    }
+    <span class="kw">أعد</span> قيمة
+}
+
+<span class="kw">دالة</span> <span class="fn">حاجز_الذاكرة</span>() {
+    <span class="kw">تجميع!</span> {
+        <span class="str">"mfence"</span>
+    }
+}
+  </div>
+
+  <h3>مثال — التحكم بالأجهزة</h3>
+  <div class="code-block" data-label="أجهزة.أبجد">
+<span class="kw">استورد</span> <span class="str">"أبجد/أجهزة"</span>
+
+<span class="kw">دالة</span> <span class="fn">اقرأ_منفذ</span>(المنفذ: <span class="tp">طبيعي١٦</span>) -> <span class="tp">طبيعي٨</span> {
+    <span class="kw">تجميع!</span> {
+        <span class="str">"in al, dx"</span>،
+        in(<span class="str">"al"</span>) _،
+        in(<span class="str">"dx"</span>) المنفذ
+    }
+}
+
+<span class="kw">دالة</span> <span class="fn">اكتب_منفذ</span>(المنفذ: <span class="tp">طبيعي١٦</span>، القيمة: <span class="tp">طبيعي٨</span>) {
+    <span class="kw">تجميع!</span> {
+        <span class="str">"out dx, al"</span>،
+        in(<span class="str">"al"</span>) القيمة،
+        in(<span class="str">"dx"</span>) المنفذ
+    }
+}
+
+<span class="kw">دالة</span> <span class="fn">تفعيل_المقاطعات</span>() {
+    <span class="kw">تجميع!</span> {
+        <span class="str">"sti"</span>
+    }
+}
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §21 ROADMAP UPDATED ═══════════════════════════════════ -->
+<section class="section" id="s21">
+  <div class="section-header">
+    <span class="section-num">21</span>
+    <div>
+      <div class="section-title">خارطة الطريق المحدثة</div>
+      <div class="section-subtitle">Updated Development Roadmap</div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">المرحلة ٠ · Q1 2025 — التأسيس</div>
+      <div class="tl-title">بناء الأساس والمُجمِّع الأولي</div>
+      <ul class="tl-items">
+        <li>تصميم القواعد النحوية الكاملة (EBNF)</li>
+        <li>بناء المُفكِّك والمُحلِّل الأولي</li>
+        <li>نظام الأنواع الأساسية وخوارزمية الاستنتاج</li>
+        <li>توليد LLVM IR للكود البسيط</li>
+        <li>Hello World يعمل!</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">المرحلة ١ · Q2 2025 — Alpha</div>
+      <div class="tl-title">الميزات الجوهرية وFFI</div>
+      <ul class="tl-items">
+        <li>نظام الملكية والاستعارة الكامل</li>
+        <li>الأنواع العامة والمشابهات</li>
+        <li>FFI لمكتبات C الكاملة</li>
+        <li>مكتبة قياسية مبكرة (طباعة، ملفات، شبكة أساسية)</li>
+        <li>أداة أبجد-نسّق</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">المرحلة ٢ · Q3 2025 — Beta</div>
+      <div class="tl-title">البيئة والتزامن</div>
+      <ul class="tl-items">
+        <li>نظام async/await الكامل</li>
+        <li>نموذج الممثلين (Actor Model)</li>
+        <li>مدير الحزم أبجد-حزم</li>
+        <li>خادم LSP وإضافة VS Code</li>
+        <li>FFI لمكتبات Go وPython</li>
+        <li>دعم WebAssembly</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">المرحلة ٣ · Q4 2025 — RC</div>
+      <div class="tl-title">الاستقرار والأداء</div>
+      <ul class="tl-items">
+        <li>تحسينات SIMD وتوجيهات التحسين</li>
+        <li>اختبارات مقارنة الأداء الشاملة</li>
+        <li>توثيق كامل بالعربية</li>
+        <li>مكتبة قياسية شاملة (نصوص، رياضيات، تشفير)</li>
+        <li>ARM64 (Apple Silicon + Linux) دعم كامل</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">المرحلة ٤ · Q1 2026 — v1.0</div>
+      <div class="tl-title">الإصدار الرسمي الأول</div>
+      <ul class="tl-items">
+        <li>ضمان الاستقرار: API لن يتغير في v1.x</li>
+        <li>بيئة تطوير متكاملة عربية (IDE)</li>
+        <li>منصة حزم عامة (packages.أبجد.dev)</li>
+        <li>دعم RISC-V التجريبي</li>
+        <li>مؤتمر افتراضي لمجتمع أبجد</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">المرحلة ٥ · Q2 2026 — v1.2</div>
+      <div class="tl-title">SidraUI وسَرَاب</div>
+      <ul class="tl-items">
+        <li>إصدار SidraUI الأول مع Vulkan rendering</li>
+        <li>إصدار سَرَاب (إطار الألعاب) الأول</li>
+        <li>محرر رسومي للألعاب بالعربية</li>
+        <li>مكونات UI جاهزة مع Frosted Glass</li>
+        <li>نظام الرسوم المتحركة الكامل</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">المرحلة ٦ · Q3 2026 — v1.5</div>
+      <div class="tl-title">الذكاء الاصطناعي والرياضيات</div>
+      <ul class="tl-items">
+        <li>مكتبة التعلم الآلي الكاملة</li>
+        <li>معالجة اللغة العربية الطبيعية</li>
+        <li>دعم نماذج LLM المحلية</li>
+        <li>مكتبات الرياضيات المتقدمة (Fortran-like)</li>
+        <li>مكتبات الفيزياء العلمية</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">المرحلة ٧ · Q4 2026 — v1.8</div>
+      <div class="tl-title">الميزات الإسلامية والشبكات</div>
+      <ul class="tl-items">
+        <li>مكتبة التقويم الهجري وأحكام الصلاة</li>
+        <li>مكتبة القرآن الكريم مع البحث</li>
+        <li>مكتبات الشبكات والأمن السيبراني</li>
+        <li>إطار تطوير الويب الكامل</li>
+        <li>يسونل العربي (Arabic JSON)</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">المرحلة ٨ · Q1 2027 — v2.0</div>
+      <div class="tl-title">النضج الكامل</div>
+      <ul class="tl-items">
+        <li>أبجد-IDE رسمي مع AI Assistant</li>
+        <li>نظام بيئي كامل بالعربية</li>
+        <li>توثيق شامل ومجتمع نشط</li>
+        <li>دعم كامل لجميع المنصات</li>
+        <li>مؤتمر أبجد السنوي الأول</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="badges">
+    <span class="badge badge-gold">v0.1 · Alpha · Q1 2025</span>
+    <span class="badge badge-teal">v0.5 · Beta · Q3 2025</span>
+    <span class="badge badge-teal">v0.9 · RC · Q4 2025</span>
+    <span class="badge badge-rust">v1.0 · Stable · Q1 2026</span>
+    <span class="badge badge-gold">v1.2 · SidraUI · Q2 2026</span>
+    <span class="badge badge-teal">v1.5 · AI · Q3 2026</span>
+    <span class="badge badge-teal">v1.8 · Islamic · Q4 2026</span>
+    <span class="badge badge-rust">v2.0 · Mature · Q1 2027</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §22 TECHNICAL ═══════════════════════════════════ -->
+<section class="section" id="s22">
+  <div class="section-header">
+    <span class="section-num">22</span>
+    <div>
+      <div class="section-title">المتطلبات التقنية</div>
+      <div class="section-subtitle">Technical Requirements</div>
+    </div>
+  </div>
+
+  <h3>المُجمِّع (أبجد-ج)</h3>
+  <table class="spec-table">
+    <tbody>
+      <tr><td>لغة التطوير</td><td class="mono">Rust 1.75+</td></tr>
+      <tr><td>واجهة توليد الكود</td><td class="mono">LLVM 17+ (primary) / Cranelift (dev mode)</td></tr>
+      <tr><td>تنسيق الإخراج</td><td class="mono">ELF64, Mach-O, PE/COFF, WASM</td></tr>
+      <tr><td>المعايير المدعومة</td><td class="mono">Unicode 15.0, UTF-8, Arabic Block U+0600–U+06FF</td></tr>
+      <tr><td>معمارية الهدف</td><td class="mono">x86-64, AArch64, RISC-V64GC, wasm32</td></tr>
+      <tr><td>أنظمة التشغيل</td><td class="mono">Linux, macOS, Windows, FreeBSD</td></tr>
+      <tr><td>نموذج الذاكرة</td><td class="mono">Ownership + Borrow Checker (Polonius)</td></tr>
+      <tr><td>تنسيق رموز التصحيح</td><td class="mono">DWARF 5 (مع دعم Unicode في الأسماء)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>مكتبة القياسية (أبجد-مكتبة)</h3>
+  <table class="spec-table">
+    <tbody>
+      <tr><td>الوحدات الأساسية</td><td>نصوص، أرقام، ذاكرة، مؤشرات، تزامن</td></tr>
+      <tr><td>وحدات الإدخال/الإخراج</td><td>ملفات، شبكة TCP/UDP، مقابس Unix</td></tr>
+      <tr><td>وحدات التزامن</td><td>قنوات، نعج، قفلات، Actor runtime</td></tr>
+      <tr><td>وحدات المعالجة</td><td>قوائم، قواميس، أشجار، كومة، مكدس</td></tr>
+      <tr><td>وحدات المرافق</td><td>تشفير (SHA, AES)، ضغط (zstd)، JSON، UUID</td></tr>
+      <tr><td>وحدات الاختبار</td><td>تأكد، تأكد_خطأ، معياري، اختبار_خاصية</td></tr>
+    </tbody>
+  </table>
+
+  <h3>المتطلبات الوظيفية</h3>
+  <div class="code-block" data-label="متطلبات وظيفية">
+<span class="cmt">── أداء ──</span>
+- وقت بناء مشروع 10,000 سطر: &lt; 10 ثوانٍ
+- تحسين (-O2): أداء ≥ 95% من C المكافئ
+- استهلاك ذاكرة المُجمِّع: &lt; 500 MB لمليون سطر
+
+<span class="cmt">── صحة ──</span>
+- أمان الذاكرة 100% في الكود الآمن (بدون "غير_آمن")
+- لا سلوك غير محدد في الكود الآمن
+- تحقق شامل من حدود المصفوفات
+
+<span class="cmt">── سهولة الاستخدام ──</span>
+- رسائل خطأ عربية واضحة مع اقتراحات إصلاح
+- وقت التثبيت الكامل: &lt; 2 دقيقة
+- Hello World في أقل من 5 دقائق للمبتدئ
+  </div>
+
+  <div class="sep"><div class="sep-line"></div><div class="sep-glyph">ب</div><div class="sep-line"></div></div>
+
+  <div class="callout gold">
+    <strong>ملاحظة حول ترخيص المُجمِّع:</strong> المُجمِّع وأدواته مرخَّصة بـ MIT مفتوحة المصدر. المكتبة القياسية مرخَّصة بـ MIT أو Apache 2.0 (اختيار المستخدم). الاستخدام التجاري مسموح به بالكامل.
+  </div>
+</section>
+
+</div><!-- /.wrapper -->
+
+<!-- ═══════════════════════════════════ FOOTER ═══════════════════════════════════ -->
+<footer class="footer">
+  <div class="wrapper">
+    <div class="footer-logo">أبجد</div>
+    <p style="margin-bottom:0.5rem;">
+      وثيقة متطلبات المنتج · الإصدار 1.0 · 2025
+    </p>
+    <p style="margin-bottom:0.5rem; font-family:var(--mono); font-size:0.78rem; direction:ltr;">
+      Product Requirements Document · Abjad Programming Language · Extension: برنامج.أبجد
+    </p>
+    <p style="margin-top: 1.5rem; font-size: 0.75rem; opacity: 0.5;">
+      لغة برمجة حرة مفتوحة المصدر · ترخيص MIT
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
