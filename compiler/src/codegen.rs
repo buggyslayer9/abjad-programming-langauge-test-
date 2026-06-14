@@ -187,7 +187,7 @@ impl CodeGenerator {
                 let array = self.compile_expression(array)?;
                 let index = self.compile_expression(index)?;
                 
-                if let (Some(array_ptr, Some(index_int)) = (array.as_pointer_value(), index.as_int_value()) {
+                if let (Some(array_ptr), Some(index_int)) = (array.as_pointer_value(), index.as_int_value()) {
                     let ptr = unsafe {
                         self.builder.build_gep(array_ptr, &[index_int], "gep")?
                     };

@@ -1,0 +1,14 @@
+/home/doctorit/Projects/abjadprogramminglanguage/compiler/target/debug/deps/serde-5f4fddc21de8c6a1.d: /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/doctorit/Projects/abjadprogramminglanguage/compiler/target/debug/build/serde-b7d6bd1946fd92ab/out/private.rs
+
+/home/doctorit/Projects/abjadprogramminglanguage/compiler/target/debug/deps/libserde-5f4fddc21de8c6a1.rlib: /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/doctorit/Projects/abjadprogramminglanguage/compiler/target/debug/build/serde-b7d6bd1946fd92ab/out/private.rs
+
+/home/doctorit/Projects/abjadprogramminglanguage/compiler/target/debug/deps/libserde-5f4fddc21de8c6a1.rmeta: /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/doctorit/Projects/abjadprogramminglanguage/compiler/target/debug/build/serde-b7d6bd1946fd92ab/out/private.rs
+
+/home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/home/doctorit/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/home/doctorit/Projects/abjadprogramminglanguage/compiler/target/debug/build/serde-b7d6bd1946fd92ab/out/private.rs:
+
+# env-dep:OUT_DIR=/home/doctorit/Projects/abjadprogramminglanguage/compiler/target/debug/build/serde-b7d6bd1946fd92ab/out
