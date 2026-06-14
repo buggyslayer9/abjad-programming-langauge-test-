@@ -221,9 +221,7 @@ impl MemoryLayoutAnalyzer {
             Expression::Parenthesized(expr) => {
                 self.analyze_expression(expr)?;
             }
-            Expression::Assignment { .. } => {
-                // Handled in analyze_statement
-            }
+            // Assignment is a Statement, not an Expression
         }
         Ok(())
     }

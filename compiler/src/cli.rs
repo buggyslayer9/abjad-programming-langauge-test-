@@ -1,9 +1,9 @@
 use anyhow::Result;
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, CommandFactory};
 use std::path::PathBuf;
-use abjad_compiler::lexer::Lexer;
-use abjad_compiler::parser::Parser;
-use abjad_compiler::type_checker::TypeChecker;
+use crate::lexer::Lexer;
+use crate::parser::Parser;
+use crate::type_checker::TypeChecker;
 
 /// Abjad Programming Language Compiler
 #[derive(Parser, Debug)]
@@ -159,7 +159,8 @@ pub fn run() -> Result<()> {
 
     match cli.command {
         Some(Commands::Build { file, output, opt, debug }) => {
-            build(&file, output.as_deref(), opt, debug)?;
+            let output = output.as_ref().map(|p| p.as_path());
+            build(&file, output, opt, debug)?;
         }
         Some(Commands::Run { file, args }) => {
             run_program(&file, &args)?;
@@ -174,7 +175,8 @@ pub fn run() -> Result<()> {
             format_code(&path, check)?;
         }
         Some(Commands::Init { name, directory }) => {
-            init_project(&name, directory.as_deref())?;
+            let directory = directory.as_ref().map(|p| p.as_path());
+            init_project(&name, directory)?;
         }
         Some(Commands::Add { package, version }) => {
             add_dependency(&package, version.as_deref())?;
@@ -191,7 +193,8 @@ pub fn run() -> Result<()> {
         None => {
             // Default behavior: compile the file if provided
             if let Some(file) = cli.file {
-                build(&file, cli.output.as_deref(), cli.opt, cli.debug)?;
+                let output = cli.output.as_ref().map(|p| p.as_path());
+                build(&file, output, cli.opt, cli.debug)?;
             } else {
                 // Show help if no file provided
                 println!("{}", Cli::command().render_long_help());
@@ -368,7 +371,8 @@ fn format_code(path: &PathBuf, check: bool) -> Result<()> {
 
 /// Initialize a new project
 fn init_project(name: &str, directory: Option<&PathBuf>) -> Result<()> {
-    let dir = directory.unwrap_or(&PathBuf::from(name));
+    let binding = PathBuf::from(name);
+    let dir = directory.unwrap_or(&binding);
     
     println!("Initializing project: {}", name);
     println!("Directory: {}", dir.display());

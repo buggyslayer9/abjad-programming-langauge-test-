@@ -258,9 +258,9 @@ impl Optimizer {
     fn constant_propagation(&mut self, ast: &mut AST) -> Result<()> {
         for statement in &mut ast.statements {
             if let Statement::Let { name, value, .. } = statement {
-                if let Expression::Identifier(var_name) = &**value {
+                if let Expression::Identifier(var_name) = &*value {
                     if let Some(lit) = self.constants.get(var_name) {
-                        *value = Box::new(Expression::Literal(lit.clone()));
+                        *value = Expression::Literal(lit.clone()).into();
                     }
                 }
             }
@@ -270,13 +270,13 @@ impl Optimizer {
 
     /// Dead code elimination
     fn dead_code_elimination(&mut self, ast: &mut AST) -> Result<()> {
-        // Remove unreachable code after return
+        // Remove unreachable code after return expressions
         let mut in_return = false;
         ast.statements.retain(|stmt| {
             if in_return {
                 return false;
             }
-            if matches!(stmt, Statement::Return(_)) {
+            if matches!(stmt, Statement::Expression(Expression::Return(_))) {
                 in_return = true;
             }
             true
@@ -293,7 +293,7 @@ impl Optimizer {
                     if let Expression::Block(statements) = &**body {
                         if statements.len() <= 4 {
                             // Unroll small loops
-                            *expr = body.clone();
+                            *expr = *body.clone();
                         }
                     }
                 }

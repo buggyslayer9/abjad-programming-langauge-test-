@@ -129,7 +129,7 @@ impl MemorySafetyChecker {
                 self.check_expression(index)?;
                 
                 // Check for bounds (simplified)
-                if let Expression::Literal(Literal::Integer(idx)) = index {
+                if let Expression::Literal(Literal::Integer(idx)) = &**index {
                     if *idx < 0 {
                         return Err(AbjadError::syntax("Array index cannot be negative"));
                     }
@@ -189,9 +189,7 @@ impl MemorySafetyChecker {
             Expression::Parenthesized(expr) => {
                 self.check_expression(expr)?;
             }
-            Expression::Assignment { .. } => {
-                // Handled in check_statement
-            }
+            // Assignment is a Statement, not an Expression
         }
         Ok(())
     }

@@ -28,6 +28,7 @@ impl Linker {
         return "link.exe".to_string();
         #[cfg(target_os = "macos")]
         return "clang".to_string();
+        #[cfg(not(any(target_os = "linux", target_os = "windows", target_os = "macos")))]
         "cc".to_string() // Default
     }
 
@@ -52,6 +53,7 @@ impl Linker {
             #[cfg(target_arch = "aarch64")]
             return "aarch64-apple-darwin".to_string();
         }
+        #[cfg(not(any(target_os = "linux", target_os = "windows", target_os = "macos")))]
         "x86_64-unknown-linux-gnu".to_string() // Default
     }
 

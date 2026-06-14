@@ -1,7 +1,7 @@
 use std::fmt;
 
 /// Represents a token in the Abjad language
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Token {
     // Keywords
     Function,      // دالة

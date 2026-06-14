@@ -333,10 +333,7 @@ impl TypeChecker {
                 Ok(target_type.clone())
             }
             Expression::Parenthesized(expr) => self.check_expression(expr),
-            Expression::Assignment { .. } => {
-                // This should be handled in check_statement
-                Ok(Type::Named("Unit".to_string()))
-            }
+            // Assignment is a Statement, not an Expression
         }
     }
 

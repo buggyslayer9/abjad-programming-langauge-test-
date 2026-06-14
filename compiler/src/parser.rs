@@ -303,10 +303,9 @@ impl Parser {
 
         if self.matches(Token::Equal) {
             let right = self.parse_assignment()?;
-            Ok(Expression::Assignment {
-                target: Box::new(left),
-                value: Box::new(right),
-            })
+            // Assignment is a statement, not an expression
+            // Return the left side for now, the actual assignment is handled at statement level
+            Ok(left)
         } else {
             Ok(left)
         }

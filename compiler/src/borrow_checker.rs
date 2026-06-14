@@ -180,9 +180,7 @@ impl BorrowChecker {
             Expression::Parenthesized(expr) => {
                 self.check_expression(expr)?;
             }
-            Expression::Assignment { .. } => {
-                // Handled in check_statement
-            }
+            // Assignment is a Statement, not an Expression
         }
         Ok(())
     }

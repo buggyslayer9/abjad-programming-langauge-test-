@@ -2,7 +2,7 @@ use std::fmt;
 use thiserror::Error;
 
 /// Warning type for the Abjad compiler
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Error)]
 pub enum Warning {
     #[error("تحذير: {0}")]
     General(String),

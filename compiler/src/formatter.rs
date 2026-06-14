@@ -52,7 +52,7 @@ impl Formatter {
     /// Format content
     pub fn format_content(&self, content: &str) -> Result<String> {
         let mut formatted = String::new();
-        let mut indent_level = 0;
+        let mut indent_level: usize = 0;
         let in_block = false;
         
         for line in content.lines() {
