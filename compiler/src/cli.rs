@@ -305,13 +305,49 @@ fn check(file: &PathBuf) -> Result<()> {
 /// Clean build artifacts
 fn clean(all: bool) -> Result<()> {
     if all {
-        println!("Cleaning all build artifacts");
+        println!("Cleaning all build artifacts...");
     } else {
-        println!("Cleaning build artifacts");
+        println!("Cleaning build artifacts...");
     }
 
-    // TODO: Implement actual clean logic
-    println!("Clean not yet implemented");
+    // Remove target directory
+    let target_dir = std::path::Path::new("compiler/target");
+    if target_dir.exists() {
+        std::fs::remove_dir_all(target_dir)?;
+        println!("Removed target directory");
+    }
+
+    // Remove dist directory
+    let dist_dir = std::path::Path::new("dist");
+    if dist_dir.exists() {
+        std::fs::remove_dir_all(dist_dir)?;
+        println!("Removed dist directory");
+    }
+
+    // Remove build directory
+    let build_dir = std::path::Path::new("build");
+    if build_dir.exists() {
+        std::fs::remove_dir_all(build_dir)?;
+        println!("Removed build directory");
+    }
+
+    // Remove out directory
+    let out_dir = std::path::Path::new("out");
+    if out_dir.exists() {
+        std::fs::remove_dir_all(out_dir)?;
+        println!("Removed out directory");
+    }
+
+    if all {
+        // Remove Cargo.lock
+        let cargo_lock = std::path::Path::new("compiler/Cargo.lock");
+        if cargo_lock.exists() {
+            std::fs::remove_file(cargo_lock)?;
+            println!("Removed Cargo.lock");
+        }
+    }
+
+    println!("Clean completed successfully");
 
     Ok(())
 }
