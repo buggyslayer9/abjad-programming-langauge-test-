@@ -429,19 +429,42 @@ impl<'a> Lexer<'a> {
         }
     }
 
-    /// Tokenize the entire input
-    pub fn tokenize(&mut self) -> Result<Vec<Token>> {
+    /// Skip to a synchronization point for error recovery
+    fn skip_to_sync_point(&mut self) {
+        // Skip until we find a semicolon, brace, or keyword
+        while let Some(&c) = self.peek() {
+            if c == ';' || c == '{' || c == '}' || c == '\n' {
+                break;
+            }
+            self.next();
+        }
+    }
+
+    /// Get the next token with error recovery
+    pub fn next_token_with_recovery(&mut self) -> Token {
+        match self.next_token() {
+            Ok(token) => token,
+            Err(_) => {
+                // Skip to sync point and continue
+                self.skip_to_sync_point();
+                Token::EOF
+            }
+        }
+    }
+
+    /// Tokenize the entire input with error recovery
+    pub fn tokenize_with_recovery(&mut self) -> Vec<Token> {
         let mut tokens = Vec::new();
         
         loop {
-            let token = self.next_token()?;
+            let token = self.next_token_with_recovery();
             if token == Token::EOF {
                 break;
             }
             tokens.push(token);
         }
 
-        Ok(tokens)
+        tokens
     }
 }
 

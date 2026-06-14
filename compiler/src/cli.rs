@@ -1,6 +1,9 @@
 use anyhow::Result;
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
+use abjad_compiler::lexer::Lexer;
+use abjad_compiler::parser::Parser;
+use abjad_compiler::type_checker::TypeChecker;
 
 /// Abjad Programming Language Compiler
 #[derive(Parser, Debug)]
@@ -210,9 +213,30 @@ fn build(file: &PathBuf, output: Option<&PathBuf>, opt: u8, debug: bool) -> Resu
     println!("Optimization level: {}", opt);
     println!("Debug symbols: {}", debug);
 
-    // TODO: Implement actual build logic
-    println!("Build not yet implemented");
-
+    // Read source file
+    let source = std::fs::read_to_string(file)?;
+    
+    // Tokenize
+    println!("Tokenizing...");
+    let mut lexer = Lexer::new(&source);
+    let tokens = lexer.tokenize()?;
+    println!("Generated {} tokens", tokens.len());
+    
+    // Parse
+    println!("Parsing...");
+    let mut parser = Parser::new(tokens);
+    let ast = parser.parse()?;
+    println!("Generated AST with {} statements", ast.statements.len());
+    
+    // Type check
+    println!("Type checking...");
+    let mut type_checker = TypeChecker::new();
+    type_checker.check(&ast)?;
+    println!("Type checking passed");
+    
+    // TODO: Generate code (LLVM backend)
+    println!("Code generation not yet implemented");
+    
     Ok(())
 }
 
@@ -224,8 +248,26 @@ fn run_program(file: &PathBuf, args: &[String]) -> Result<()> {
         println!("Arguments: {:?}", args);
     }
 
-    // TODO: Implement actual run logic
-    println!("Run not yet implemented");
+    // Read source file
+    let source = std::fs::read_to_string(file)?;
+    
+    // Tokenize
+    println!("Tokenizing...");
+    let mut lexer = Lexer::new(&source);
+    let tokens = lexer.tokenize()?;
+    
+    // Parse
+    println!("Parsing...");
+    let mut parser = Parser::new(tokens);
+    let ast = parser.parse()?;
+    
+    // Type check
+    println!("Type checking...");
+    let mut type_checker = TypeChecker::new();
+    type_checker.check(&ast)?;
+    
+    // TODO: Compile and execute
+    println!("Execution not yet implemented - code generation required");
 
     Ok(())
 }
@@ -234,8 +276,28 @@ fn run_program(file: &PathBuf, args: &[String]) -> Result<()> {
 fn check(file: &PathBuf) -> Result<()> {
     println!("Checking: {}", file.display());
 
-    // TODO: Implement actual check logic
-    println!("Check not yet implemented");
+    // Read source file
+    let source = std::fs::read_to_string(file)?;
+    
+    // Tokenize
+    println!("Tokenizing...");
+    let mut lexer = Lexer::new(&source);
+    let tokens = lexer.tokenize()?;
+    println!("Generated {} tokens", tokens.len());
+    
+    // Parse
+    println!("Parsing...");
+    let mut parser = Parser::new(tokens);
+    let ast = parser.parse()?;
+    println!("Generated AST with {} statements", ast.statements.len());
+    
+    // Type check
+    println!("Type checking...");
+    let mut type_checker = TypeChecker::new();
+    type_checker.check(&ast)?;
+    println!("Type checking passed");
+    
+    println!("Check completed successfully - no errors found");
 
     Ok(())
 }

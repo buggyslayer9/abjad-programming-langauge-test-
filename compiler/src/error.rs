@@ -4,22 +4,22 @@ use thiserror::Error;
 /// Error type for the Abjad compiler
 #[derive(Error, Debug)]
 pub enum AbjadError {
-    #[error("Lexical error: {0}")]
+    #[error("خطأ معجمي: {0}")]
     Lexical(String),
 
-    #[error("Syntax error: {0}")]
+    #[error("خطأ نحوي: {0}")]
     Syntax(String),
 
-    #[error("Type error: {0}")]
+    #[error("خطأ في الأنواع: {0}")]
     Type(String),
 
-    #[error("IO error: {0}")]
+    #[error("خطأ في الإدخال/الإخراج: {0}")]
     Io(#[from] std::io::Error),
 
-    #[error("File not found: {0}")]
+    #[error("الملف غير موجود: {0}")]
     FileNotFound(String),
 
-    #[error("Internal error: {0}")]
+    #[error("خطأ داخلي: {0}")]
     Internal(String),
 }
 
@@ -45,5 +45,17 @@ impl AbjadError {
     /// Create a new internal error
     pub fn internal(msg: impl Into<String>) -> Self {
         AbjadError::Internal(msg.into())
+    }
+
+    /// Get the Arabic error message
+    pub fn arabic_message(&self) -> &str {
+        match self {
+            AbjadError::Lexical(msg) => msg,
+            AbjadError::Syntax(msg) => msg,
+            AbjadError::Type(msg) => msg,
+            AbjadError::Io(_) => "خطأ في قراءة الملف",
+            AbjadError::FileNotFound(_) => "الملف غير موجود",
+            AbjadError::Internal(msg) => msg,
+        }
     }
 }
